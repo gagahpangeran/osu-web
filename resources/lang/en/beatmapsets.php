@@ -79,6 +79,7 @@ return [
 
         'details' => [
             'by_artist' => 'by :artist',
+            'created_by' => 'created by :creator',
             'favourite' => 'favourite this beatmap',
             'favourite_login' => 'sign in to favourite this beatmap',
             'logged-out' => 'you need to sign in before downloading any beatmaps!',
