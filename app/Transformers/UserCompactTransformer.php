@@ -530,6 +530,7 @@ class UserCompactTransformer extends TransformerAbstract
             'audio_muted',
             'audio_volume',
             'beatmapset_card_size',
+            'beatmapset_cover_expanded',
             'beatmapset_download',
             'beatmapset_show_anime_cover',
             'beatmapset_show_nsfw',
