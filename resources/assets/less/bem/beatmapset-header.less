@@ -48,29 +48,14 @@
     .link-plain();
   }
 
-  &__title {
-    font-size: @font-size--title-small-3;
-
-    @media @desktop {
-      font-size: @font-size--title;
-      display: inline;
-    }
-  }
-
-  &__status {
+  &__info-cover {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 53px;
+    padding: 0 50px;
     display: flex;
-
-    @media @desktop {
-      display: none;
-    }
-  }
-
-  &__title-container {
-    margin-top: 5px;
-    margin-bottom: 10px;
-
-    @media @desktop {
-      margin-bottom: 0;
-    }
+    align-items: center;
   }
 }
