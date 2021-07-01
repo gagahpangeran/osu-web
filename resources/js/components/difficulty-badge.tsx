@@ -8,7 +8,9 @@ import { formatStarRating } from 'utils/html';
 export default function DifficultyBadge(props: { rating: number }) {
   return (
     <div
-      className='difficulty-badge'
+      className={classWithModifiers('difficulty-badge', props.modifiers, {
+        'expert-plus': props.rating >= 6.5,
+      })}
       style={{
         '--bg': getDiffColour(props.rating),
         color: getDiffTextColour(props.rating),
