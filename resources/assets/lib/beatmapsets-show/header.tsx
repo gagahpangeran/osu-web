@@ -10,7 +10,6 @@ import * as React from 'react';
 import { StringWithComponent } from 'string-with-component';
 import { UserLink } from 'user-link';
 import { getArtist, getTitle } from 'utils/beatmap-helper';
-import BeatmapList from './beatmap-list';
 import BeatmapPicker from './beatmap-picker';
 
 interface Props {
@@ -83,9 +82,10 @@ export default class Header extends React.PureComponent<Props> {
             <BeatmapList
               beatmaps={this.props.beatmaps}
               beatmapset={this.props.beatmapset}
-              createLink={this.createLink}
               currentBeatmap={this.props.currentBeatmap}
-              type='show'
+              large={false}
+              modifiers={['beatmapset-show']}
+              onSelectBeatmap={this.onSelectBeatmap}
             />
           </div>
 
@@ -99,8 +99,6 @@ export default class Header extends React.PureComponent<Props> {
       </div>
     );
   }
-
-  private createLink = (beatmap: BeatmapJsonExtended) => generateHash({ beatmap });
 
   private onSelectBeatmap = (beatmapId: number) => {
     const selectedBeatmap = this.props.beatmaps.find((beatmap) => beatmap.id === beatmapId);
