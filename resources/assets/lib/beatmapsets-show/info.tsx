@@ -2,21 +2,18 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import { BeatmapIcon } from 'beatmap-icon';
-import { BeatmapsetJson } from 'beatmapsets/beatmapset-json';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
-import { padStart } from 'lodash';
+import * as _ from 'lodash';
 import * as React from 'react';
 import { StringWithComponent } from 'string-with-component';
 import { UserLink } from 'user-link';
-import { getBeatmapMapper } from 'utils/beatmap-helper';
-import CountBadge from './count-badge';
-import Extra from './extra';
+import { getDiffRating } from 'utils/beatmap-helper';
 import Metadata from './metadata';
 import Stats from './stats';
 
 interface Props {
-  beatmapset: BeatmapsetJson;
+  beatmapset: BeatmapsetExtendedJson;
   currentBeatmap: BeatmapJsonExtended;
   hoveredBeatmap: BeatmapJsonExtended | null;
 }
@@ -40,7 +37,7 @@ export default class Header extends React.PureComponent<Props> {
 
     return (
       <div className='beatmapset-info'>
-        <div className='beatmapset-info__diff'>
+        <div className='beatmapset-info__item beatmapset-info__item--diff'>
           <div className='beatmapset-info__diff-item beatmapset-info__diff-item--details'>
             <BeatmapIcon
               beatmap={this.props.currentBeatmap}
@@ -95,6 +92,12 @@ export default class Header extends React.PureComponent<Props> {
           <Stats beatmap={this.props.currentBeatmap} />
           <div className='beatmapset-info__line beatmapset-info__line--mobile' />
           <Extra beatmap={this.props.currentBeatmap} beatmapset={this.props.beatmapset} />
+        </div>
+
+        <div className='beatmapset-info__item beatmapset-info__item--stats'>
+          <Metadata beatmapset={this.props.beatmapset} />
+          <Stats beatmap={this.props.currentBeatmap} />
+          <div />
         </div>
       </div>
     );

@@ -3,68 +3,69 @@
 
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import * as React from 'react';
-import CountBadge from './count-badge';
+import { StringWithComponent } from 'string-with-component';
 
 interface Props {
   beatmap: BeatmapJsonExtended;
 }
 
 export default class Stats extends React.PureComponent<Props> {
-  render() {
-    const statsKey = this.getStatsKey();
+  private get statsKey() {
+    switch (this.props.beatmap.mode) {
+      case 'mania':
+        return ['cs', 'drain', 'accuracy', 'difficulty_rating'] as const;
+      case 'taiko':
+        return ['drain', 'accuracy', 'difficulty_rating'] as const;
+      default:
+        return ['cs', 'drain', 'accuracy', 'ar', 'difficulty_rating'] as const;
+    }
+  }
 
+  render() {
     return (
       <div className='beatmapset-stats'>
         <div className='beatmapset-stats__count'>
           <CountBadge
             data={{
-              circle_count: `${this.props.beatmap.count_circles}`,
-              slider_count: `${this.props.beatmap.count_sliders}`,
+              circle_count: osu.formatNumber(this.props.beatmap.count_circles),
+              slider_count: osu.formatNumber(this.props.beatmap.count_sliders),
             }}
           />
         </div>
 
-        {statsKey.map(this.renderStat)}
+        {this.statsKey.map((key) => (
+          <React.Fragment key={key}>
+            {this.renderStat(key, this.props.beatmap[key])}
+          </React.Fragment>
+        ))}
       </div>
     );
   }
 
-  private getStatsKey = (): (keyof BeatmapJsonExtended)[] => {
-    switch (this.props.beatmap.mode) {
-      case 'mania':
-        return ['cs', 'drain', 'accuracy', 'difficulty_rating'];
-      case 'taiko':
-        return ['drain', 'accuracy', 'difficulty_rating'];
-      default:
-        return ['cs', 'drain', 'accuracy', 'ar', 'difficulty_rating'];
-    }
-  };
-
-  private renderStat = (stat: keyof BeatmapJsonExtended) => {
-    if (this.props.beatmap.mode === 'mania' && stat === 'cs') {
-      stat += '-mania';
+  private renderStat = (label: string, value: number) => {
+    const addSpacer = label === 'accuracy';
+    if (this.props.beatmap.mode === 'mania' && label === 'cs') {
+      label += '-mania';
     }
 
     return (
-      <React.Fragment key={stat}>
-        <div>{osu.trans(`beatmapsets.show.stats.${stat}`)}</div>
+      <>
+        {addSpacer && <div className='beatmapset-stats__spacer' />}
+        <div>{osu.trans(`beatmapsets.show.stats.${label}`)}</div>
         <div className='beatmapset-stats__value'>
-          {stat === 'difficulty_rating'
-            ? osu.formatNumber(this.props.beatmap.difficulty_rating)
-            : this.props.beatmap[stat]
-          }
+          {osu.formatNumber(value)}
         </div>
         <div className='beatmapset-stats__bar-container'>
-          <div className='beatmapset-bar'>
+          <div className='beatmapset-stats__bar'>
             <div
-              className='beatmapset-bar__fill'
+              className='beatmapset-stats__bar-fill'
               style={{
-                width: `${10 * Math.min(10, Number(this.props.beatmap[stat]))}%`,
-              } as React.CSSProperties}
+                width: `${10 * Math.min(10, value)}%`,
+              }}
             />
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   };
 }

@@ -5,14 +5,7 @@
   .default-gutter-v2();
   font-size: @font-size--normal;
 
-  &__diff {
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    line-height: 1;
-  }
-
-  &__diff-detail {
+  &__diff-item {
     display: flex;
     align-items: center;
     column-gap: 7px;
@@ -52,6 +45,26 @@
       @media @desktop {
         grid-template-columns: 1fr auto 1fr 1fr;
       }
+    }
+  }
+
+  &__item {
+    margin-top: 10px;
+
+    &--diff {
+      display: flex;
+      align-items: center;
+      line-height: 1;
+    }
+
+    &--stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: start;
+      gap: 30px;
+      margin-bottom: 15px;
+      font-size: @font-size--normal;
+      font-weight: bold;
     }
   }
 
