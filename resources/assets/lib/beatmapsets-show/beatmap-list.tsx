@@ -3,7 +3,6 @@
 
 import Blackout from 'blackout';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
-import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
 import * as React from 'react';
 import { generate as generateHash } from 'utils/beatmapset-page-hash';
 import { classWithModifiers } from 'utils/css';
@@ -17,10 +16,9 @@ interface CurrentDiscussions {
 }
 
 interface Props {
-  beatmapset: BeatmapsetExtendedJson;
+  beatmaps: BeatmapJsonExtended[];
   currentBeatmap: BeatmapJsonExtended;
-  currentDiscussions?: CurrentDiscussions;
-  type: 'show' | 'discussions';
+  currentDiscussions: CurrentDiscussions;
 }
 
 interface State {
