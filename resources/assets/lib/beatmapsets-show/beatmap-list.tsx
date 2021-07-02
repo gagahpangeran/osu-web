@@ -3,6 +3,7 @@
 
 import Blackout from 'blackout';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
+import core from 'osu-core-singleton';
 import * as React from 'react';
 import { generate as generateHash } from 'utils/beatmapset-page-hash';
 import { classWithModifiers } from 'utils/css';
@@ -44,21 +45,31 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
   }
 
   render() {
+    const iconOnly = this.props.type === 'show' && core.windowSize.isDesktop;
+
     return (
       <div className={classWithModifiers('beatmap-list', { selecting: this.state.showingSelector })}>
         <div className='beatmap-list__body'>
           <a
-            className='beatmap-list__item beatmap-list__item--selected beatmap-list__item--large js-beatmap-list-selector'
+            className={`${classWithModifiers('beatmap-list__item', {
+              [this.props.type]: true,
+              selected: true,
+            })} js-beatmap-list-selector`}
             href={this.createHref(this.props.currentBeatmap)}
             onClick={this.toggleSelector}
           >
-            {this.renderSelectedItem(this.props.currentBeatmap)}
+            <BeatmapListItem
+              beatmap={this.props.currentBeatmap}
+              iconOnly={iconOnly}
+              large={this.props.type === 'discussions'}
+              withButton='down'
+            />
           </a>
 
           <div
-            className={`${classWithModifiers('beatmap-list__selector', {
+            className={classWithModifiers('beatmap-list__selector', {
               'icon-only': iconOnly,
-            })} u-fancy-scrollbar`}
+            })}
           >
             {this.props.beatmaps.map((beatmap) => this.renderListItem(beatmap))}
           </div>
@@ -88,16 +99,6 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
           mode='version'
         />
       </a>
-    );
-  }
-
-  renderSelectedItem(beatmap: BeatmapJsonExtended) {
-    return (
-      <BeatmapListItem
-        beatmap={beatmap}
-        large={this.props.type === 'discussions'}
-        withButton='down'
-      />
     );
   }
 

@@ -10,6 +10,8 @@ import * as React from 'react';
 import { StringWithComponent } from 'string-with-component';
 import { UserLink } from 'user-link';
 import { getArtist, getTitle } from 'utils/beatmap-helper';
+import { classWithModifiers } from 'utils/css';
+import BeatmapList from './beatmap-list';
 import BeatmapPicker from './beatmap-picker';
 
 interface Props {
@@ -20,6 +22,7 @@ interface Props {
 
 export default class Header extends React.PureComponent<Props> {
   render() {
+    const expanded = core.userPreferences.get('beatmapset_cover_expanded');
     const beatmaps = this.props.beatmaps.get(this.props.currentBeatmap.mode) ?? [];
 
     return (
@@ -89,9 +92,14 @@ export default class Header extends React.PureComponent<Props> {
             />
           </div>
 
-          <div className='beatmapset-header__chooser-picker'>
+          <div className='beatmapset-header__details-item beatmapset-header__details-item--picker'>
+            <BeatmapList
+              beatmaps={beatmaps}
+              currentBeatmap={this.props.currentBeatmap}
+              type='show'
+            />
             <BeatmapPicker
-              beatmaps={this.props.beatmaps}
+              beatmaps={beatmaps}
               currentBeatmap={this.props.currentBeatmap}
             />
           </div>

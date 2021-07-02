@@ -8,8 +8,38 @@
   font-weight: 600;
   padding-top: 5px;
 
-  &__artist {
-    @media @desktop {
+  &__cover-container {
+    position: relative;
+    height: 53px;
+    transition: height 120ms ease-in-out;
+
+    &--expanded {
+      height: 250px;
+    }
+  }
+
+  &__details {
+    padding: 0 50px;
+    background-color: hsl(var(--hsl-b4));
+  }
+
+  &__details-item {
+    &--artist-title {
+      padding-top: 15px;
+    }
+
+    &--creator {
+      font-size: @font-size--normal;
+    }
+
+    &--picker {
+      display: flex;
+      gap: 5px;
+    }
+  }
+
+  &__details-text {
+    &--artist {
       font-size: @font-size--title-small-4;
       display: inline;
       margin-left: 5px;
