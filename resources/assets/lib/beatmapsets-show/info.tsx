@@ -40,10 +40,22 @@ export default class Header extends React.PureComponent<Props> {
 
     return (
       <div className='beatmapset-info'>
-        <div className='beatmapset-info__item beatmapset-info__item--diff'>
-          <div className='beatmapset-info__diff-detail u-ellipsis-overflow'>
-            <div className='beatmapset-info__diff-icon'>
-              <i className={`fal fa-extra-mode-${showedBeatmap.mode}`} />
+        <div className='beatmapset-info__diff'>
+          <div className='beatmapset-info__diff-item beatmapset-info__diff-item--details'>
+            <BeatmapIcon
+              beatmap={this.props.currentBeatmap}
+              modifier='beatmapset-info'
+              showTitle={false}
+            />
+
+            <div
+              className='beatmapset-info__star-difficulty'
+              style={{
+                '--bg': `var(--diff-${getDiffRating(this.props.currentBeatmap.difficulty_rating)})`,
+              } as React.CSSProperties}
+            >
+              <i className='fas fa-star' />{' '}
+              {osu.formatNumber(this.props.currentBeatmap.difficulty_rating, 2)}
             </div>
 
             <DifficultyBadge modifiers='beatmapset-info' rating={showedBeatmap.difficulty_rating} />
