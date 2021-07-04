@@ -16,14 +16,46 @@
   }
 
   &--beatmap-stats {
-    height: 5px;
+    .default-border-radius();
+    height: 4px;
     background-color: @osu-colour-b6;
   }
 
   &--beatmap-success-rate {
     height: 5px;
     background-color: @osu-colour-b6;
-    margin: 5px 0 2px;
+    margin-top: 5px;
+  }
+
+  &--beatmapset-extra {
+    .default-border-radius();
+    height: 4px;
+    background-color: @osu-colour-red-3;
+  }
+
+  &--beatmapset-off {
+    background-color: @osu-colour-b6;
+    color: @osu-colour-f1;
+  }
+
+  &--beatmapset-on {
+    background-color: @osu-colour-lime-3;
+    color: @osu-colour-b6;
+  }
+
+  &--beatmapset-hype {
+    .default-border-radius();
+    height: 5px;
+    margin: 5px 2.5px;
+  }
+
+  &--beatmapset-nomination {
+    border-radius: 10000px;
+    height: 20px;
+    margin: 5px 2.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &--double {
@@ -56,16 +88,23 @@
 
     .@{_top}--beatmap-stats & {
       .default-bar-transition();
-      background-color: #fff;
-    }
-
-    .@{_top}--beatmap-stats-stars & {
-      background-color: @yellow;
+      .default-border-radius();
+      background-color: @osu-colour-h1;
     }
 
     .@{_top}--beatmap-success-rate & {
       .default-bar-transition();
       background-color: @green;
+    }
+
+    .@{_top}--beatmapset-extra & {
+      .default-bar-transition();
+      .default-border-radius();
+      background-color: @osu-colour-lime-1;
+    }
+
+    .@{_top}--beatmapset-extra-rating & {
+      margin-left: auto;
     }
 
     .@{_top}--forum-poll & {
