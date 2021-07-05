@@ -22,12 +22,13 @@
   }
 
   &--beatmapset-description-editor {
-    .default-gutter-v2();
-    padding-top: @editor-padding;
-    padding-bottom: $padding-top;
+    .default-box-shadow();
     background-color: hsl(var(--hsl-b2));
     border-radius: @border-radius-large;
-    max-height: calc(100vh - 20px);
+
+    .forum-post-content {
+      font-size: @font-size--normal;
+    }
   }
 
   &--profile-page {
@@ -164,6 +165,16 @@
       min-height: 0;
       overflow-y: auto;
       margin-bottom: 5px;
+    }
+
+    .@{_top}--beatmapset-description-editor & {
+      max-height: 600px;
+      overflow-y: auto;
+
+      @media @desktop {
+        padding-left: 30px;
+        padding-right: $padding-left;
+      }
     }
   }
 
