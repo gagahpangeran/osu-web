@@ -2,15 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import * as React from 'react';
-import { getDiffColour, getDiffTextColour } from 'utils/beatmap-helper';
-import { formatStarRating } from 'utils/html';
+import { getDiffRating } from 'utils/beatmap-helper';
+import { classWithModifiers } from 'utils/css';
 
-export default function DifficultyBadge(props: { rating: number }) {
+export default function DifficultyBadge(props: { rating: number; modifiers?: string[] }) {
   return (
     <div
-      className={classWithModifiers('difficulty-badge', props.modifiers, {
-        'expert-plus': props.rating >= 6.5,
-      })}
+      className={classWithModifiers('difficulty-badge', props.modifiers)}
       style={{
         '--bg': getDiffColour(props.rating),
         color: getDiffTextColour(props.rating),
