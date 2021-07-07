@@ -25,14 +25,22 @@ export default class Cover extends React.Component<Props> {
         />
 
         <div className='beatmapset-page-cover__content'>
-          <div
-            className='beatmapset-status beatmapset-status--show'
-            style={{
-              '--bg': `var(--beatmapset-${this.props.beatmapset.status}-bg-transparent)`,
-              '--colour': `var(--beatmapset-${this.props.beatmapset.status}-colour)`,
-            } as React.CSSProperties}
-          >
-            {osu.trans(`beatmapsets.show.status.${this.props.beatmapset.status}`)}
+          <div className='beatmapset-page-cover__content-item beatmapset-page-cover__content-item--left'>
+            <div
+              className='beatmapset-status beatmapset-status--show'
+              style={{
+                '--bg': `var(--beatmapset-${this.props.beatmapset.status}-bg-transparent)`,
+                '--colour': `var(--beatmapset-${this.props.beatmapset.status}-colour)`,
+              } as React.CSSProperties}
+            >
+              {osu.trans(`beatmapsets.show.status.${this.props.beatmapset.status}`)}
+            </div>
+
+            {this.props.beatmapset.nsfw && (
+              <div className='nsfw-badge nsfw-badge--show'>
+                {osu.trans('beatmapsets.nsfw_badge.label')}
+              </div>
+            )}
           </div>
 
           <div className='beatmapset-page-cover__content-item beatmapset-page-cover__content-item--right'>
