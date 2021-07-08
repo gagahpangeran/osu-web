@@ -30,6 +30,29 @@
   }
 
   &__title {
-    font-size: @font-size--title;
+    font-size: @font-size--title-small-3;
+
+    @media @desktop {
+      font-size: @font-size--title;
+      display: inline;
+    }
+  }
+
+  &__status {
+    display: flex;
+    column-gap: 5px;
+
+    @media @desktop {
+      display: none;
+    }
+  }
+
+  &__title-container {
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+    @media @desktop {
+      margin-bottom: 0;
+    }
   }
 }
