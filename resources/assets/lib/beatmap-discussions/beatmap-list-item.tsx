@@ -1,13 +1,12 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import DifficultyBadge from 'components/difficulty-badge';
-import StringWithComponent from 'components/string-with-component';
-import { UserLink } from 'components/user-link';
-import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
-import BeatmapsetJson from 'interfaces/beatmapset-json';
+import DifficultyBadge from 'difficulty-badge';
+import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import UserJson from 'interfaces/user-json';
 import * as React from 'react';
+import { StringWithComponent } from 'string-with-component';
+import { UserLink } from 'user-link';
 import { classWithModifiers } from 'utils/css';
 
 interface Props {
@@ -44,19 +43,19 @@ export default class BeatmapListItem extends React.PureComponent<Props> {
             <span className='beatmap-list-item__version'>
               {version}
             </span>
-            {this.props.beatmapset.user_id !== this.props.beatmap.user_id && (
-              <>
-                {' '}
-                <span className='beatmap-list-item__mapper'>
-                  <StringWithComponent
-                    mappings={{
-                      mapper: <UserLink user={this.props.mapper} />,
-                    }}
-                    pattern={osu.trans('beatmapsets.show.details.mapped_by')}
-                  />
-                </span>
-              </>
-            )}
+            {' '}
+            <span className='beatmap-list-item__mapper'>
+              <StringWithComponent
+                mappings={{
+                  ':mapper':
+                    <UserLink
+                      key='mapper'
+                      user={{ id: this.props.mapper.id, username: this.props.mapper.username }}
+                    />,
+                }}
+                pattern={osu.trans('beatmapsets.show.details.mapped_by')}
+              />
+            </span>
           </div>
         </div>
 
