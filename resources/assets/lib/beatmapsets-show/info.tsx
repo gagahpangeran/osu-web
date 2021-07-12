@@ -35,6 +35,10 @@ function formatDuration(value: number) {
 export default class Header extends React.PureComponent<Props> {
   render() {
     const showedBeatmap = this.props.hoveredBeatmap ?? this.props.currentBeatmap;
+    const mapper = {
+      id: showedBeatmap.user_id,
+      username: this.props.beatmapset.related_users.find((user) => user.id === showedBeatmap.user_id)?.username ?? '',
+    };
 
     return (
       <div className='beatmapset-info'>
@@ -50,23 +54,17 @@ export default class Header extends React.PureComponent<Props> {
 
             <DifficultyBadge modifiers='beatmapset-info' rating={showedBeatmap.difficulty_rating} />
 
-            <div className='u-ellipsis-overflow'>
-              <span className='beatmapset-info__diff-name'>
-                {showedBeatmap.version}
-              </span>
-              {' '}
-              <span className='beatmapset-info__diff-mapper'>
-                <StringWithComponent
-                  mappings={{
-                    ':mapper':
-                      <UserLink
-                        key='mapper'
-                        user={{ id: mapper.id, username: mapper.username }}
-                      />,
-                  }}
-                  pattern={osu.trans('beatmapsets.show.details.mapped_by')}
-                />
-              </span>
+            <div className='beatmapset-info__diff-mapper'>
+              <StringWithComponent
+                mappings={{
+                  ':mapper':
+                    <UserLink
+                      key='mapper'
+                      user={mapper}
+                    />,
+                }}
+                pattern={osu.trans('beatmapsets.show.details.mapped_by')}
+              />
             </div>
           </div>
 
