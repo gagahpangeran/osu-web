@@ -9,8 +9,33 @@
   padding-top: 10px;
 
   &__artist {
-    font-size: @font-size--title-small-4;
-    margin-left: 5px;
+    @media @desktop {
+      font-size: @font-size--title-small-4;
+      display: inline;
+      margin-left: 5px;
+    }
+  }
+
+  &__chooser {
+    display: flex;
+    column-gap: 5px;
+    padding: 10px 0;
+  }
+
+  &__chooser-list {
+    flex: 1;
+
+    @media @desktop {
+      display: none;
+    }
+  }
+
+  &__chooser-picker {
+    display: none;
+
+    @media @desktop {
+      display: block;
+    }
   }
 
   &__creator {

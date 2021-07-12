@@ -16,7 +16,6 @@ interface Props {
   beatmapset: BeatmapsetExtendedJson;
   currentBeatmap: BeatmapJsonExtended;
   getCount?: (beatmap: BeatmapJsonExtended) => number | undefined;
-  large: boolean;
   modifiers?: string[];
   onSelectBeatmap: (beatmapId: number) => void;
   users: Partial<Record<number | string, UserJson>>;
@@ -53,8 +52,10 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
   }
 
   render() {
+    const classModifiers = { selecting: this.state.showingSelector, ...this.getModifiers() };
+
     return (
-      <div className={classWithModifiers('beatmap-list', this.props.modifiers, { selecting: this.state.showingSelector })}>
+      <div className={classWithModifiers('beatmap-list', classModifiers)}>
         <div className='beatmap-list__body'>
           <div
             className='beatmap-list__item beatmap-list__item--selected beatmap-list__item--large js-beatmap-list-selector'
@@ -98,6 +99,14 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
       />
     </div>
   );
+
+  private getModifiers = () => {
+    if (this.props.modifiers === undefined) {
+      return {};
+    }
+
+    return Object.fromEntries(this.props.modifiers.map((modifier) => ([modifier, true])));
+  };
 
   private hideSelector = () => {
     if (this.state.showingSelector) {
