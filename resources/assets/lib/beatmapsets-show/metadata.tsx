@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import * as React from 'react';
 import TimeWithTooltip from 'time-with-tooltip';
 import { UserLink } from 'user-link';
+import { getNominators } from 'utils/beatmap-helper';
 import MetadataEditor from './metadata-editor';
 
 interface Props {
@@ -30,6 +31,7 @@ export default class Metadata extends React.PureComponent<Props, State> {
   render() {
     const tags = this.props.beatmapset.tags.split(' ');
     const canEdit = this.props.beatmapset.current_user_attributes?.can_edit_metadata ?? false;
+    const nominators = getNominators(this.props.beatmapset);
 
     return (
       <div className='beatmapset-metadata u-fancy-scrollbar'>
@@ -109,7 +111,7 @@ export default class Metadata extends React.PureComponent<Props, State> {
             <div>
               {osu.trans('beatmapsets.show.info.nominators')}
             </div>
-            <div className='beatmapset-metadata__value'>
+            <div>
               {nominators.map((nominator, idx) => (
                 <React.Fragment key={nominator.id}>
                   <UserLink user={{ id: nominator.id, username: nominator.username }} />
