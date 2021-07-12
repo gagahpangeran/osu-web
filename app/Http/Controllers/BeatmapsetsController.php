@@ -445,6 +445,7 @@ class BeatmapsetsController extends Controller
             'current_nominations',
             'current_user_attributes',
             'description',
+            'events',
             'genre',
             'language',
             'pack_tags',
