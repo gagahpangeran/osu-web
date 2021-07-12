@@ -1,19 +1,19 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-import BeatmapExtendedJson from 'interfaces/beatmap-extended-json';
+import Blackout from 'blackout';
+import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
-import UserJson from 'interfaces/user-json';
-import { deletedUser } from 'models/user';
 import * as React from 'react';
-import { blackoutToggle } from 'utils/blackout';
-import { classWithModifiers, Modifiers } from 'utils/css';
+import { getBeatmapMapper } from 'utils/beatmap-helper';
+import { classWithModifiers } from 'utils/css';
 import { nextVal } from 'utils/seq';
 import BeatmapListItem from './beatmap-list-item';
 
 interface Props {
   beatmaps: BeatmapJsonExtended[];
   beatmapset: BeatmapsetExtendedJson;
+  createLink: (beatmap: BeatmapJsonExtended) => string;
   currentBeatmap: BeatmapJsonExtended;
   getCount?: (beatmap: BeatmapJsonExtended) => number | undefined;
   modifiers?: string[];
@@ -61,20 +61,13 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
             className='beatmap-list__item beatmap-list__item--selected beatmap-list__item--large js-beatmap-list-selector'
             onClick={this.toggleSelector}
           >
-            <div className='beatmap-list__selected beatmap-list__selected--icons'>
-              {Array.from({ length: 4 }).map((_, idx) => (
-                <i key={idx} className={`fal fa-extra-mode-${this.props.currentBeatmap.mode}`} />
-              ))}
-            </div>
-            <div className='beatmap-list__selected beatmap-list__selected--list u-ellipsis-overflow'>
-              <BeatmapListItem
-                beatmap={this.props.currentBeatmap}
-                large={this.props.large}
-                mapper={getBeatmapMapper(this.props.beatmapset, this.props.currentBeatmap)}
-                withButton='fas fa-chevron-down'
-              />
-            </div>
-          </div>
+            <BeatmapListItem
+              beatmap={this.props.currentBeatmap}
+              large={this.props.large}
+              mapper={getBeatmapMapper(this.props.beatmapset, this.props.currentBeatmap)}
+              withButton='down'
+            />
+          </a>
 
           <div className='beatmap-list__selector u-fancy-scrollbar'>
             {this.props.beatmaps.map(this.beatmapListItem)}
@@ -84,21 +77,23 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
     );
   }
 
-  private beatmapListItem = (beatmap: BeatmapJsonExtended) => (
-    <div
-      key={beatmap.id}
-      className={classWithModifiers('beatmap-list__item', { current: beatmap.id === this.props.currentBeatmap.id })}
-      data-id={beatmap.id}
-      onClick={this.selectBeatmap}
-    >
-      <BeatmapListItem
-        beatmap={beatmap}
-        beatmapset={this.props.beatmapset}
-        count={this.props.getCount?.(beatmap)}
-        mapper={beatmap.user ?? this.props.users[beatmap.user_id] ?? deletedUser.toJson()}
-      />
-    </div>
-  );
+  private beatmapListItem(beatmap: BeatmapJsonExtended) {
+    return (
+      <a
+        key={beatmap.id}
+        className={classWithModifiers('beatmap-list__item', { current: beatmap.id === this.props.currentBeatmap.id })}
+        data-id={beatmap.id}
+        href={this.props.createLink(beatmap)}
+        onClick={this.selectBeatmap}
+      >
+        <BeatmapListItem
+          beatmap={beatmap}
+          count={this.props.getCount?.(beatmap)}
+          mapper={getBeatmapMapper(this.props.beatmapset, beatmap)}
+        />
+      </a>
+    );
+  }
 
   private getModifiers = () => {
     if (this.props.modifiers === undefined) {
