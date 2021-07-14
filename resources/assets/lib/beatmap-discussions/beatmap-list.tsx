@@ -61,12 +61,19 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
             className='beatmap-list__item beatmap-list__item--selected beatmap-list__item--large js-beatmap-list-selector'
             onClick={this.toggleSelector}
           >
-            <BeatmapListItem
-              beatmap={this.props.currentBeatmap}
-              large={this.props.large}
-              mapper={getBeatmapMapper(this.props.beatmapset, this.props.currentBeatmap)}
-              withButton='down'
-            />
+            <div className='beatmap-list__selected beatmap-list__selected--icons'>
+              {Array.from({ length: 4 }).map((_, idx) => (
+                <i key={idx} className={`fal fa-extra-mode-${this.props.currentBeatmap.mode}`} />
+              ))}
+            </div>
+            <div className='beatmap-list__selected beatmap-list__selected--list u-ellipsis-overflow'>
+              <BeatmapListItem
+                beatmap={this.props.currentBeatmap}
+                large={this.props.large}
+                mapper={getBeatmapMapper(this.props.beatmapset, this.props.currentBeatmap)}
+                withButton='fas fa-chevron-down'
+              />
+            </div>
           </a>
 
           <div className='beatmap-list__selector u-fancy-scrollbar'>
