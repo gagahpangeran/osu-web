@@ -70,9 +70,11 @@ export default class Extra extends React.PureComponent<Props> {
 
   private renderBar(fill: number, rating = false) {
     return (
-      <div className={classWithModifiers('bar', 'beatmapset-extra', { 'beatmapset-extra-rating': rating })}>
+      <div className='beatmapset-bar beatmapset-bar--beatmapset-extra'>
         <div
-          className='bar__fill'
+          className={classWithModifiers('beatmapset-bar__fill', {
+            right: fromRight,
+          })}
           style={{ width: `${fill}%` }}
         />
       </div>

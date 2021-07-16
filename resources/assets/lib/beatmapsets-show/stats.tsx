@@ -55,10 +55,10 @@ export default class Stats extends React.PureComponent<Props> {
         <div className='beatmapset-stats__value'>
           {osu.formatNumber(value)}
         </div>
-        <div className='beatmapset-stats__bar'>
-          <div className='bar bar--beatmap-stats'>
+        <div className='beatmapset-stats__bar-container'>
+          <div className='beatmapset-bar'>
             <div
-              className='bar__fill'
+              className='beatmapset-bar__fill'
               style={{
                 width: `${10 * Math.min(10, Number(this.props.beatmap[stat]))}%`,
               }}
