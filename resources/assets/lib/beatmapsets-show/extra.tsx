@@ -22,12 +22,8 @@ export default class Extra extends React.PureComponent<Props> {
     );
   }
 
-  private get successRate() {
-    if (this.props.beatmap.playcount === 0) {
-      return 0;
-    }
-
-    return (this.props.beatmap.passcount / this.props.beatmap.playcount) * 100;
+  componentDidMount() {
+    this.setState({ chartAreaBound: this.chartAreaRef.current?.getBoundingClientRect() ?? null });
   }
 
   render() {

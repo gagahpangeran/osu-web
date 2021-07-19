@@ -105,8 +105,8 @@ return [
             'count' => [
                 'total_play' => 'Total Play Count',
                 'diff_play' => 'Difficulty Play Count',
-                'favourite' => 'Favourite Count'
-            ]
+                'favourite' => 'Favourite Count',
+            ],
         ],
 
         'details_date' => [

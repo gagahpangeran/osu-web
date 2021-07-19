@@ -70,7 +70,6 @@ export default class Header extends React.PureComponent<Props> {
           </span>
         </div>
 
-
         <div className='beatmapset-header__creator'>
           <StringWithComponent
             mappings={{
