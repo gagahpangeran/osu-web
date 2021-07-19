@@ -11,10 +11,11 @@ interface Props {
   beatmapset: BeatmapsetExtendedJson;
 }
 
-@observer
-export default class Description extends React.Component<Props> {
-  @observable private isEditing = false;
-  @observable private xhr: JQuery.jqXHR<BeatmapsetJsonForShow> | null = null;
+interface State {
+  description?: { bbcode: string; description: string };
+  isBusy: boolean;
+  isEditing: boolean;
+}
 
   constructor(props: Props) {
     super(props);

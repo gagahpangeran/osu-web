@@ -5,10 +5,11 @@ import Blackout from 'blackout';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
 import * as React from 'react';
-import { getBeatmapMapper } from 'utils/beatmap-helper';
-import { classWithModifiers } from 'utils/css';
+import { blackoutToggle } from 'utils/blackout';
+import { classWithModifiers, Modifiers } from 'utils/css';
+import { formatNumber } from 'utils/html';
+import { isClickable } from 'utils/html';
 import { nextVal } from 'utils/seq';
-import BeatmapListItem from './beatmap-list-item';
 
 interface Props {
   beatmaps: BeatmapJsonExtended[];
@@ -84,23 +85,21 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
     );
   }
 
-  private beatmapListItem(beatmap: BeatmapJsonExtended) {
-    return (
-      <a
-        key={beatmap.id}
-        className={classWithModifiers('beatmap-list__item', { current: beatmap.id === this.props.currentBeatmap.id })}
-        data-id={beatmap.id}
-        href={this.props.createLink(beatmap)}
-        onClick={this.selectBeatmap}
-      >
-        <BeatmapListItem
-          beatmap={beatmap}
-          count={this.props.getCount?.(beatmap)}
-          mapper={getBeatmapMapper(this.props.beatmapset, beatmap)}
-        />
-      </a>
-    );
-  }
+  private beatmapListItem = (beatmap: BeatmapJsonExtended) => (
+    <a
+      key={beatmap.id}
+      className={classWithModifiers('beatmap-list__item', { current: beatmap.id === this.props.currentBeatmap.id })}
+      data-id={beatmap.id}
+      href={this.props.createLink(beatmap)}
+      onClick={this.selectBeatmap}
+    >
+      <BeatmapListItem
+        beatmap={beatmap}
+        count={this.props.getCount?.(beatmap)}
+        mapper={getBeatmapMapper(this.props.beatmapset, beatmap)}
+      />
+    </a>
+  );
 
   private getModifiers = () => {
     if (this.props.modifiers === undefined) {
