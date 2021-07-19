@@ -79,8 +79,34 @@ export default class Toolbar extends React.PureComponent<Props> {
     );
   }
 
+  private renderDiscussionButtons() {
+    if (this.props.beatmapset.discussion_enabled) {
+      return (
+        <BigButton
+          modifiers={['beatmapset-toolbar']}
+          props={{
+            href: route('beatmapsets.discussion', { beatmapset: this.props.beatmapset.id }),
+          }}
+          text={osu.trans('beatmapsets.show.discussion')}
+        />
+      );
+    }
+
+    if (this.props.beatmapset.legacy_thread_url !== null) {
+      return (
+        <BigButton
+          modifiers={['beatmapset-toolbar']}
+          props={{
+            href: this.props.beatmapset.legacy_thread_url,
+          }}
+          text={osu.trans('beatmapsets.show.discussion')}
+        />
+      );
+    }
+  }
+
   private renderDownloadButtons() {
-    if (core.currentUser != null && !this.props.beatmapset.availability?.download_disabled) {
+    if (currentUser.id && !this.props.beatmapset.availability?.download_disabled) {
       return (
         <>
           {this.props.beatmapset.video ? (
@@ -113,24 +139,23 @@ export default class Toolbar extends React.PureComponent<Props> {
     }
   }
 
-  private renderFavouriteButton() {
-    const action = this.props.hasFavourited ? 'unfavourite' : 'favourite';
-    const icon = `${this.props.hasFavourited ? 'fas' : 'far'} fa-heart`;
-
-    return (
-      <button
-        className='btn-osu-big btn-osu-big--beatmapset-favourite btn-osu-big--pink'
-        onClick={this.toggleFavourite}
-        title={osu.trans(`beatmapsets.show.details.${action}`)}
-      >
-        <i className={icon} />
-        {' '}
-        {osu.formatNumber(this.props.favcount)}
-      </button>
-    );
+  private renderFavouriteButton({ action, icon }: { action: string; icon: string }) {
+    if (currentUser.id) {
+      return (
+        <button
+          className='btn-osu-big btn-osu-big--beatmapset-favourite btn-osu-big--pink'
+          onClick={this.toggleFavourite}
+          title={osu.trans(`beatmapsets.show.details.${action}`)}
+        >
+          <i className={icon} />
+          {' '}
+          {this.props.favcount}
+        </button>
+      );
+    }
   }
 
-  renderLoginButton() {
+  private renderLoginButton() {
     if (!currentUser.id) {
       return (
         <BigButton
