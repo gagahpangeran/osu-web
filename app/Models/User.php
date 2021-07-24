@@ -1231,6 +1231,11 @@ class User extends Model implements AfterCommit, AuthenticatableContract, HasLoc
         return $returnQuery ? $this->$relation() : $this->$relation;
     }
 
+    public function screenshots()
+    {
+        return $this->hasMany(UserScreenshot::class);
+    }
+
     public function topicWatches()
     {
         return $this->hasMany(TopicWatch::class);
