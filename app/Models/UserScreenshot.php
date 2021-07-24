@@ -32,6 +32,11 @@ class UserScreenshot extends Model
         return 'user-screenshots';
     }
 
+    public function title()
+    {
+        return $this->title ?? 'No Title';
+    }
+
     public static function upload(UploadedFile $file, User $user): UserScreenshot
     {
         $screenshot = new static();
