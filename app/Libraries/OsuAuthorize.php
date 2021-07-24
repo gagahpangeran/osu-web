@@ -1800,6 +1800,18 @@ class OsuAuthorize
 
     /**
      * @param User|null $user
+     * @return string
+     * @throws AuthorizationCheckException
+     */
+    public function checkScreenshotStore(?User $user): string
+    {
+        $this->ensureLoggedIn($user);
+
+        return 'ok';
+    }
+
+    /**
+     * @param User|null $user
      * @param string $prefix
      * @throws AuthorizationCheckException
      */
