@@ -116,6 +116,9 @@ return [
         'scores_controller' => [
             '_' => 'performance',
         ],
+        'screenshots_controller' => [
+            '_' => 'screenshots',
+        ],
         'store_controller' => [
             '_' => 'osu!store',
         ],

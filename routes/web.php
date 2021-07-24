@@ -346,6 +346,10 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
 
+    Route::group(['as' => 'screenshots', 'prefix' => 'screenshots'], function () {
+        Route::get('{screenshot}', 'ScreenshotsController@show')->name('show');
+    });
+
     Route::get('/home', 'HomeController@index')->name('home');
 
     route_redirect('/', 'home');

@@ -19,9 +19,24 @@ class ScreenshotsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['only' => 'store']);
 
         return parent::__construct();
+    }
+
+    public function show($id)
+    {
+        $screenshot = UserScreenshot::findOrFail($id);
+
+        $screenshot->load(['user']);
+
+        $screenshot = json_item(
+            $screenshot,
+            'UserScreenshot',
+            ['image_url', 'user']
+        );
+
+        return ext_view('screenshots.show', compact('screenshot'));
     }
 
     public function store()
