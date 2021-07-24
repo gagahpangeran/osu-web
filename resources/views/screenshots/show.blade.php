@@ -8,9 +8,11 @@
 ])
 
 @section('content')
-    <div class="js-react--screenshot-show osu-layout osu-layout--full"></div>
+    <div class="js-react--screenshots-show osu-layout osu-layout--full"></div>
 
     <script id="json-show" type="application/json">
         {!! json_encode($screenshot) !!}
     </script>
+
+    @include('layout._react_js', ['src' => 'js/react/screenshots-show.js'])
 @endsection
