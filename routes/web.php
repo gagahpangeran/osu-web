@@ -459,6 +459,10 @@ Route::group(['as' => 'api.', 'prefix' => 'api', 'middleware' => ['api', Throttl
             Route::get('{score}', 'ScoresController@show')->name('show');
         });
 
+        Route::group(['as' => 'screenshots.', 'prefix' => 'screenshots'], function () {
+            Route::post('store', 'ScreenshotsController@store')->name('store');
+        });
+
         // Beatmapsets
         //   GET /api/v2/beatmapsets/search/:filters
         Route::get('beatmapsets/search/{filters?}', 'BeatmapsetsController@search');
