@@ -18,7 +18,7 @@ class CreateUserScreenshotsTable extends Migration
     {
         Schema::create('osu_user_screenshots', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->default(0);
             $table->string('hash')->nullable();
             $table->string('ext')->nullable();
             $table->string('title')->nullable();

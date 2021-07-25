@@ -42,6 +42,7 @@ class UserScreenshot extends Model
         $screenshot = new static();
 
         DB::transaction(function () use ($screenshot, $file, $user) {
+            $screenshot->save(); // get id
             $screenshot->user()->associate($user);
             $screenshot->storeFile($file->getRealPath(), $file->getClientOriginalExtension());
             $screenshot->save();
