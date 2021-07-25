@@ -1803,11 +1803,50 @@ class OsuAuthorize
      * @return string
      * @throws AuthorizationCheckException
      */
+    public function checkScreenshotModerate(?User $user): string
+    {
+        $this->ensureLoggedIn($user);
+        $this->ensureCleanRecord($user);
+
+        if ($user->isModerator()) {
+            return 'ok';
+        }
+
+        return 'unauthorized';
+    }
+
+    /**
+     * @param User|null $user
+     * @return string
+     * @throws AuthorizationCheckException
+     */
     public function checkScreenshotStore(?User $user): string
     {
         $this->ensureLoggedIn($user);
 
         return 'ok';
+    }
+
+    /**
+     * @param User|null $user
+     * @param UserScreenshot $screenshot
+     * @return string
+     * @throws AuthorizationCheckException
+     */
+    public function checkScreenshotUpdate(?User $user, UserScreenshot $screenshot): string
+    {
+        if ($this->doCheckUser($user, 'ScreenshotModerate')->can()) {
+            return 'ok';
+        }
+
+        $this->ensureLoggedIn($user);
+        $this->ensureCleanRecord($user);
+
+        if ($screenshot->user_id === $user->getKey()) {
+            return 'ok';
+        }
+
+        return 'unauthorized';
     }
 
     /**
