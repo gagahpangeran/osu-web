@@ -5,6 +5,7 @@
 
 return [
     'show' => [
+        'download' => 'Download',
         'no_title' => 'No Title',
         'uploaded_by' => 'Uploaded by :user at :timeago',
     ],

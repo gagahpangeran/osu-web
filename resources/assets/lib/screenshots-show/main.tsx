@@ -39,6 +39,16 @@ export default function Main(props: Props) {
               className='screenshot-show__image'
               src={props.screenshot.image_url ?? ''}
             />
+            <div className='screenshot-show__button'>
+              <a
+                className='btn-osu-big btn-osu-big--forum-button'
+                data-turbolinks={false}
+                download
+                href={props.screenshot.image_url ?? ''}
+              >
+                {osu.trans('screenshots.show.download')}
+              </a>
+            </div>
           </div>
         </div>
       </div>

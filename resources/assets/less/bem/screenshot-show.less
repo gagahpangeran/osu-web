@@ -2,14 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 .screenshot-show {
+  &__button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
   &__content {
     .default-gutter-v2();
     padding-top: @gutter-v2;
-    padding-bottom: $padding-top;
+    padding-bottom: 20px;
 
     @media @desktop {
       padding-top: @gutter-v2-desktop;
-      padding-bottom: $padding-top;
     }
   }
 
