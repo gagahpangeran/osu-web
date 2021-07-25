@@ -4,6 +4,7 @@
 import HeaderV4 from 'header-v4';
 import ScreenshotJson from 'interfaces/screenshot-json';
 import * as React from 'react';
+import { StringWithComponent } from 'string-with-component';
 import TimeWithTooltip from 'time-with-tooltip';
 import { UserLink } from 'user-link';
 
@@ -23,10 +24,13 @@ export default function Main(props: Props) {
               {props.screenshot.title}
             </h1>
             <div className='screenshot-show__detail'>
-              Uploaded by{' '}
-              <UserLink user={props.screenshot.user} />{' '}
-              at{' '}
-              <TimeWithTooltip dateTime={props.screenshot.created_at} relative />
+              <StringWithComponent
+                mappings={{
+                  ':timeago': <TimeWithTooltip key='timeago' dateTime={props.screenshot.created_at} relative />,
+                  ':user': <UserLink key='user' user={props.screenshot.user} />,
+                }}
+                pattern={osu.trans('screenshots.show.uploaded_by')}
+              />
             </div>
           </div>
           <div className='screenshot-show__content'>

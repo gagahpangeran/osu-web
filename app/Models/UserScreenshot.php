@@ -34,7 +34,7 @@ class UserScreenshot extends Model
 
     public function getTitle()
     {
-        return $this->title ?? 'No Title';
+        return $this->title ?? osu_trans('screenshots.show.no_title');
     }
 
     public static function upload(UploadedFile $file, User $user): UserScreenshot
