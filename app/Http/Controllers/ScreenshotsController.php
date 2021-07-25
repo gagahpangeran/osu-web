@@ -60,4 +60,18 @@ class ScreenshotsController extends Controller
 
         return json_item($screenshot, 'UserScreenshot');
     }
+
+    public function update($id)
+    {
+        $screenshot = UserScreenshot::findOrFail($id);
+
+        priv_check('ScreenshotUpdate', $screenshot)->ensureCan();
+
+        $params = get_params(request()->all(), null, ['title']);
+
+        $screenshot->update($params);
+        $screenshot->refresh();
+
+        return json_item($screenshot, 'UserScreenshot');
+    }
 }

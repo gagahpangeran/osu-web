@@ -346,7 +346,7 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
 
-    Route::resource('screenshots', 'ScreenshotsController', ['only' => 'show']);
+    Route::resource('screenshots', 'ScreenshotsController', ['only' => ['show', 'update']]);
 
     Route::get('/home', 'HomeController@index')->name('home');
 
