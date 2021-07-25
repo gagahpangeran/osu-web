@@ -32,7 +32,7 @@ class UserScreenshot extends Model
         return 'user-screenshots';
     }
 
-    public function title()
+    public function getTitle()
     {
         return $this->title ?? 'No Title';
     }
