@@ -346,9 +346,7 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
 
-    Route::group(['as' => 'screenshots', 'prefix' => 'screenshots'], function () {
-        Route::get('{screenshot}', 'ScreenshotsController@show')->name('show');
-    });
+    Route::resource('screenshots', 'ScreenshotsController', ['only' => 'show']);
 
     Route::get('/home', 'HomeController@index')->name('home');
 
@@ -463,9 +461,7 @@ Route::group(['as' => 'api.', 'prefix' => 'api', 'middleware' => ['api', Throttl
             Route::get('{score}', 'ScoresController@show')->name('show');
         });
 
-        Route::group(['as' => 'screenshots.', 'prefix' => 'screenshots'], function () {
-            Route::post('store', 'ScreenshotsController@store')->name('store');
-        });
+        Route::apiResource('screenshots', 'ScreenshotsController', ['only' => ['store']]);
 
         // Beatmapsets
         //   GET /api/v2/beatmapsets/search/:filters
