@@ -49,7 +49,8 @@ class ScreenshotsController extends Controller
 
         priv_check('ScreenshotStore')->ensureCan();
 
-        if (!in_array(strtolower(Request::file('screenshot')->getClientOriginalExtension()), static::ALLOWED_EXTENSIONS, true)) {
+
+        if (!in_array(strtolower(Request::file('screenshot')->extension()), static::ALLOWED_EXTENSIONS, true)) {
             abort(422);
         }
 
