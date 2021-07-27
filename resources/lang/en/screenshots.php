@@ -5,6 +5,7 @@
 
 return [
     'show' => [
+        'deleted' => 'Deleted',
         'download' => 'Download',
         'edit_title' => 'Edit title',
         'no_title' => 'No Title',

@@ -34,6 +34,10 @@ class UserScreenshot extends Model
 
     public function getTitle()
     {
+        if ($this->deleted_at !== null) {
+            return osu_trans('screenshots.show.deleted');
+        }
+
         return $this->title ?? osu_trans('screenshots.show.no_title');
     }
 
