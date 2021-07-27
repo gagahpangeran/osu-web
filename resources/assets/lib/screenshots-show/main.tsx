@@ -74,7 +74,7 @@ export default class Main extends React.PureComponent<Props, State> {
             <div className='screenshot-show__toolbar'>
               <button
                 className='btn-osu-big btn-osu-big--forum-button'
-                onClick={this.handleEditButton}
+                onClick={this.toggleEditTitle}
               >
                 {osu.trans('screenshots.show.edit_title')}
               </button>
@@ -101,10 +101,6 @@ export default class Main extends React.PureComponent<Props, State> {
       </>
     );
   }
-
-  private handleEditButton = () => {
-    this.toggleEditTitle();
-  };
 
   private handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value });
