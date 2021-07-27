@@ -7,51 +7,120 @@ import * as React from 'react';
 import { StringWithComponent } from 'string-with-component';
 import TimeWithTooltip from 'time-with-tooltip';
 import { UserLink } from 'user-link';
+import { classWithModifiers } from 'utils/css';
 
 interface Props {
   screenshot: ScreenshotJson;
 }
 
-export default function Main(props: Props) {
-  return (
-    <>
-      <HeaderV4 />
+interface State {
+  isEditTitle: boolean;
+  title: string;
+}
 
-      <div className='osu-page osu-page--generic-compact'>
-        <div className='screenshot-show'>
-          <div className='screenshot-show__header'>
-            <h1 className='screenshot-show__title'>
-              {props.screenshot.title}
-            </h1>
-            <div className='screenshot-show__detail'>
-              <StringWithComponent
-                mappings={{
-                  ':timeago': <TimeWithTooltip key='timeago' dateTime={props.screenshot.created_at} relative />,
-                  ':user': <UserLink key='user' user={props.screenshot.user} />,
-                }}
-                pattern={osu.trans('screenshots.show.uploaded_by')}
-              />
-            </div>
-          </div>
-          <div className='screenshot-show__content'>
-            <img
-              alt={props.screenshot.title}
-              className='screenshot-show__image'
-              src={props.screenshot.image_url ?? ''}
-            />
-            <div className='screenshot-show__button'>
-              <a
-                className='btn-osu-big btn-osu-big--forum-button'
-                data-turbolinks={false}
-                download
-                href={props.screenshot.image_url ?? ''}
+export default class Main extends React.PureComponent<Props, State> {
+  private inputRef = React.createRef<HTMLInputElement>();
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      isEditTitle: false,
+      title: this.props.screenshot.title,
+    };
+  }
+
+  componentDidUpdate() {
+    if (this.state.isEditTitle) {
+      this.setInputFocus();
+    }
+  }
+
+  render() {
+    return (
+      <>
+        <HeaderV4 />
+
+        <div className='osu-page osu-page--generic-compact'>
+          <div className='screenshot-show'>
+            <div className='screenshot-show__header'>
+              <div
+                className={classWithModifiers('screenshot-show__title-container', {
+                  edit: this.state.isEditTitle,
+                })}
               >
-                {osu.trans('screenshots.show.download')}
-              </a>
+                <h1 className='screenshot-show__title screenshot-show__title--display'>
+                  {this.state.title}
+                </h1>
+                <input
+                  ref={this.inputRef}
+                  className='screenshot-show__title screenshot-show__title--input'
+                  onChange={this.handleEditInput}
+                  type='text'
+                  value={this.state.title}
+                />
+              </div>
+              <div className='screenshot-show__detail'>
+                <StringWithComponent
+                  mappings={{
+                    ':timeago': <TimeWithTooltip key='timeago' dateTime={this.props.screenshot.created_at} relative />,
+                    ':user': <UserLink key='user' user={this.props.screenshot.user} />,
+                  }}
+                  pattern={osu.trans('screenshots.show.uploaded_by')}
+                />
+              </div>
+            </div>
+
+            <div className='screenshot-show__toolbar'>
+              <button
+                className='btn-osu-big btn-osu-big--forum-button'
+                onClick={this.handleEditButton}
+              >
+                {osu.trans('screenshots.show.edit_title')}
+              </button>
+            </div>
+
+            <div className='screenshot-show__content'>
+              <img
+                alt={this.props.screenshot.title}
+                className='screenshot-show__image'
+                src={this.props.screenshot.image_url ?? ''}
+              />
+              <div className='screenshot-show__button'>
+                <a
+                  className='btn-osu-big btn-osu-big--forum-button'
+                  data-turbolinks={false}
+                  download
+                  href={this.props.screenshot.image_url ?? ''}
+                >
+                  {osu.trans('screenshots.show.download')}
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+
+  private handleEditButton = () => {
+    this.toggleEditTitle();
+  };
+
+  private handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ title: e.target.value });
+  };
+
+  private setInputFocus = () => {
+    const inputTitle = this.inputRef.current;
+
+    if (inputTitle != null) {
+      inputTitle.focus();
+      inputTitle.selectionStart = inputTitle.value.length;
+    }
+  };
+
+  private toggleEditTitle = () => {
+    this.setState({ isEditTitle: !this.state.isEditTitle });
+  };
 }

@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 .screenshot-show {
+  @_top: screenshot-show;
+
   &__button {
     display: flex;
     justify-content: center;
@@ -35,7 +37,50 @@
   }
 
   &__title {
+    .reset-input();
     font-size: @font-size--title;
+    line-height: normal;
+    border-bottom: 1px solid transparent;
+
+    &--display {
+      .@{_top}__title-container--edit & {
+        opacity: 0;
+      }
+    }
+
+    &--input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: none;
+
+      .@{_top}__title-container--edit & {
+        display: block;
+        border-bottom-color: hsl(var(--hsl-d1));
+      }
+    }
+  }
+
+  &__title-container {
     margin: 0 0 10px;
+    position: relative;
+  }
+
+  &__title-input {
+    .reset-input();
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  &__toolbar {
+    .default-gutter-v2();
+    padding-top: 10px;
+    padding-bottom: $padding-top;
+    display: flex;
+    justify-content: flex-end;
+    background-color: hsl(var(--hsl-b3));
   }
 }
