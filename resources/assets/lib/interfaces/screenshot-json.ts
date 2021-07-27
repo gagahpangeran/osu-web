@@ -6,6 +6,7 @@ import UserJson from './user-json';
 export default interface ScreenshotJson {
   created_at: string;
   id: number;
+  is_deleted: boolean;
   image_url: string | null;
   title: string;
   user: UserJson;

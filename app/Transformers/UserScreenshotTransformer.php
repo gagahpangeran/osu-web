@@ -18,6 +18,7 @@ class UserScreenshotTransformer extends TransformerAbstract
     {
         return [
             'id' => $screenshot->id,
+            'is_deleted' => $screenshot->deleted_at !== null,
             'created_at' => json_time($screenshot->created_at),
             'title' => $screenshot->getTitle(),
         ];
