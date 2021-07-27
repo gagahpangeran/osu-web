@@ -76,17 +76,25 @@ export default class Main extends React.PureComponent<Props, State> {
                 className='btn-osu-big btn-osu-big--forum-button'
                 onClick={this.toggleEditTitle}
               >
-                {osu.trans('screenshots.show.edit_title')}
+                {osu.trans(this.state.isEditTitle ? 'common.buttons.cancel' : 'screenshots.show.edit_title')}
               </button>
 
-              <a
-                className='btn-osu-big btn-osu-big--forum-primary'
-                data-turbolinks={false}
-                download
-                href={this.props.screenshot.image_url ?? ''}
-              >
-                {osu.trans('screenshots.show.download')}
-              </a>
+              {this.state.isEditTitle ? (
+                <button
+                  className='btn-osu-big btn-osu-big--forum-primary'
+                >
+                  {osu.trans('common.buttons.save')}
+                </button>
+              ) : (
+                <a
+                  className='btn-osu-big btn-osu-big--forum-primary'
+                  data-turbolinks={false}
+                  download
+                  href={this.props.screenshot.image_url ?? ''}
+                >
+                  {osu.trans('screenshots.show.download')}
+                </a>
+              )}
             </div>
 
             <div className='screenshot-show__content'>
