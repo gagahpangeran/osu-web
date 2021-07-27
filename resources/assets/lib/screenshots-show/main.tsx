@@ -15,6 +15,7 @@ interface Props {
 }
 
 interface State {
+  isBusy: boolean;
   isEdit: boolean;
   title: string;
 }
@@ -26,6 +27,7 @@ export default class Main extends React.PureComponent<Props, State> {
     super(props);
 
     this.state = {
+      isBusy: false,
       isEdit: false,
       title: this.props.screenshot.title,
     };
@@ -56,6 +58,7 @@ export default class Main extends React.PureComponent<Props, State> {
                 <input
                   ref={this.inputRef}
                   className='screenshot-show__title screenshot-show__title--input'
+                  disabled={this.state.isBusy}
                   onChange={this.handleEditInput}
                   type='text'
                   value={this.state.title}
@@ -75,6 +78,7 @@ export default class Main extends React.PureComponent<Props, State> {
             <div className='screenshot-show__toolbar'>
               <button
                 className='btn-osu-big btn-osu-big--forum-button'
+                disabled={this.state.isBusy}
                 onClick={this.toggleEditTitle}
               >
                 {osu.trans(this.state.isEdit ? 'common.buttons.cancel' : 'screenshots.show.edit_title')}
@@ -83,6 +87,7 @@ export default class Main extends React.PureComponent<Props, State> {
               {this.state.isEdit ? (
                 <button
                   className='btn-osu-big btn-osu-big--forum-primary'
+                  disabled={this.state.isBusy}
                   onClick={this.save}
                 >
                   {osu.trans('common.buttons.save')}
@@ -117,6 +122,15 @@ export default class Main extends React.PureComponent<Props, State> {
   };
 
   private save = () => {
+    if (!osu.presence(this.state.title)) return;
+
+    if (this.state.title === this.props.screenshot.title) {
+      this.toggleEditTitle();
+      return;
+    }
+
+    this.setState({ isBusy: true });
+
     $.ajax(route('screenshots.update', { screenshot: this.props.screenshot.id }), {
       data: {
         title: this.state.title,
@@ -124,7 +138,11 @@ export default class Main extends React.PureComponent<Props, State> {
       method: 'PATCH',
     }).done(() => {
       this.toggleEditTitle();
-    }).fail(osu.ajaxError);
+      osu.reloadPage(); // Changing page title
+    }).fail(osu.ajaxError)
+      .always(() => {
+        this.setState({ isBusy: false });
+      });
   };
 
   private setInputFocus = () => {
