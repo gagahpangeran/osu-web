@@ -24,6 +24,18 @@ class ScreenshotsController extends Controller
         return parent::__construct();
     }
 
+    public function destroy($id)
+    {
+        $screenshot = UserScreenshot::whereNull('deleted_at')->findOrFail($id);
+
+        priv_check('ScreenshotDestroy', $screenshot)->ensureCan();
+
+        $screenshot->deleteWithFile();
+        $screenshot->refresh();
+
+        return json_item($screenshot, 'UserScreenshot');
+    }
+
     public function show($id)
     {
         $screenshot = UserScreenshot::findOrFail($id);
