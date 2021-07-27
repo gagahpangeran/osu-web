@@ -4,19 +4,14 @@
 .screenshot-show {
   @_top: screenshot-show;
 
-  &__button {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-
   &__content {
     .default-gutter-v2();
     padding-top: @gutter-v2;
-    padding-bottom: 20px;
+    padding-bottom: $padding-top;
 
     @media @desktop {
       padding-top: @gutter-v2-desktop;
+      padding-bottom: $padding-top;
     }
   }
 
@@ -81,6 +76,7 @@
     padding-bottom: $padding-top;
     display: flex;
     justify-content: flex-end;
+    column-gap: 10px;
     background-color: hsl(var(--hsl-b3));
   }
 }
