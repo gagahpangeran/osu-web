@@ -15,7 +15,7 @@ interface Props {
 }
 
 interface State {
-  isEditTitle: boolean;
+  isEdit: boolean;
   title: string;
 }
 
@@ -26,13 +26,13 @@ export default class Main extends React.PureComponent<Props, State> {
     super(props);
 
     this.state = {
-      isEditTitle: false,
+      isEdit: false,
       title: this.props.screenshot.title,
     };
   }
 
   componentDidUpdate() {
-    if (this.state.isEditTitle) {
+    if (this.state.isEdit) {
       this.setInputFocus();
     }
   }
@@ -47,7 +47,7 @@ export default class Main extends React.PureComponent<Props, State> {
             <div className='screenshot-show__header'>
               <div
                 className={classWithModifiers('screenshot-show__title-container', {
-                  edit: this.state.isEditTitle,
+                  edit: this.state.isEdit,
                 })}
               >
                 <h1 className='screenshot-show__title screenshot-show__title--display'>
@@ -77,10 +77,10 @@ export default class Main extends React.PureComponent<Props, State> {
                 className='btn-osu-big btn-osu-big--forum-button'
                 onClick={this.toggleEditTitle}
               >
-                {osu.trans(this.state.isEditTitle ? 'common.buttons.cancel' : 'screenshots.show.edit_title')}
+                {osu.trans(this.state.isEdit ? 'common.buttons.cancel' : 'screenshots.show.edit_title')}
               </button>
 
-              {this.state.isEditTitle ? (
+              {this.state.isEdit ? (
                 <button
                   className='btn-osu-big btn-osu-big--forum-primary'
                   onClick={this.save}
@@ -137,6 +137,6 @@ export default class Main extends React.PureComponent<Props, State> {
   };
 
   private toggleEditTitle = () => {
-    this.setState({ isEditTitle: !this.state.isEditTitle });
+    this.setState({ isEdit: !this.state.isEdit });
   };
 }
