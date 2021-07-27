@@ -3,6 +3,7 @@
 
 import HeaderV4 from 'header-v4';
 import ScreenshotJson from 'interfaces/screenshot-json';
+import { route } from 'laroute';
 import * as React from 'react';
 import { StringWithComponent } from 'string-with-component';
 import TimeWithTooltip from 'time-with-tooltip';
@@ -82,6 +83,7 @@ export default class Main extends React.PureComponent<Props, State> {
               {this.state.isEditTitle ? (
                 <button
                   className='btn-osu-big btn-osu-big--forum-primary'
+                  onClick={this.save}
                 >
                   {osu.trans('common.buttons.save')}
                 </button>
@@ -112,6 +114,17 @@ export default class Main extends React.PureComponent<Props, State> {
 
   private handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value });
+  };
+
+  private save = () => {
+    $.ajax(route('screenshots.update', { screenshot: this.props.screenshot.id }), {
+      data: {
+        title: this.state.title,
+      },
+      method: 'PATCH',
+    }).done(() => {
+      this.toggleEditTitle();
+    }).fail(osu.ajaxError);
   };
 
   private setInputFocus = () => {
