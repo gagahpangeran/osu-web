@@ -26,6 +26,7 @@ use App\Models\Multiplayer\Room;
 use App\Models\OAuth\Client;
 use App\Models\User;
 use App\Models\UserContestEntry;
+use App\Models\UserScreenshot;
 use Carbon\Carbon;
 use Ds;
 
@@ -1795,6 +1796,28 @@ class OsuAuthorize
         $this->ensureLoggedIn($user);
 
         // yet another admin only =D
+        return 'unauthorized';
+    }
+
+    /**
+     * @param User|null $user
+     * @param UserScreenshot $screenshot
+     * @return string
+     * @throws AuthorizationCheckException
+     */
+    public function checkScreenshotDestroy(?User $user, UserScreenshot $screenshot): string
+    {
+        if ($this->doCheckUser($user, 'ScreenshotModerate')->can()) {
+            return 'ok';
+        }
+
+        $this->ensureLoggedIn($user);
+        $this->ensureCleanRecord($user);
+
+        if ($screenshot->user_id === $user->getKey()) {
+            return 'ok';
+        }
+
         return 'unauthorized';
     }
 
