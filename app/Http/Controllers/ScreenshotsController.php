@@ -38,7 +38,7 @@ class ScreenshotsController extends Controller
 
     public function show($id)
     {
-        $screenshot = UserScreenshot::findOrFail($id);
+        $screenshot = UserScreenshot::withTrashed()->findOrFail($id);
 
         $screenshot->load(['user']);
 
