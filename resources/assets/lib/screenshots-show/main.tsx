@@ -41,6 +41,8 @@ export default class Main extends React.PureComponent<Props, State> {
   }
 
   render() {
+    const canEditOrDelete = this.props.screenshot.user.id === currentUser.id || currentUser.is_admin || currentUser.is_moderator;
+
     return (
       <>
         <HeaderV4 />
@@ -82,13 +84,16 @@ export default class Main extends React.PureComponent<Props, State> {
             {!this.props.screenshot.is_deleted && (
               <>
                 <div className='screenshot-show__toolbar'>
-                  <button
-                    className='btn-osu-big btn-osu-big--forum-button'
-                    disabled={this.state.isBusy}
-                    onClick={this.toggleEditTitle}
-                  >
-                    {osu.trans(this.state.isEdit ? 'common.buttons.cancel' : 'screenshots.show.edit_title')}
-                  </button>
+                  {canEditOrDelete && (
+                    <button
+                      className='btn-osu-big btn-osu-big--forum-button'
+                      disabled={this.state.isBusy}
+                      onClick={this.toggleEditTitle}
+                    >
+                      {osu.trans(this.state.isEdit ? 'common.buttons.cancel' : 'screenshots.show.edit_title')}
+                    </button>
+
+                  )}
 
                   {this.state.isEdit ? (
                     <button
@@ -109,18 +114,20 @@ export default class Main extends React.PureComponent<Props, State> {
                     </a>
                   )}
 
-                  <div className='screenshot-show__menu'>
-                    <PopupMenuPersistent>
-                      {() => (
-                        <button
-                          className='simple-menu__item'
-                          onClick={this.delete}
-                        >
-                          {osu.trans('common.buttons.delete')}
-                        </button>
-                      )}
-                    </PopupMenuPersistent>
-                  </div>
+                  {canEditOrDelete && (
+                    <div className='screenshot-show__menu'>
+                      <PopupMenuPersistent>
+                        {() => (
+                          <button
+                            className='simple-menu__item'
+                            onClick={this.delete}
+                          >
+                            {osu.trans('common.buttons.delete')}
+                          </button>
+                        )}
+                      </PopupMenuPersistent>
+                    </div>
+                  )}
                 </div>
 
                 <div className='screenshot-show__content'>
