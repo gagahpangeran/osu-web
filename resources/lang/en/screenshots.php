@@ -5,6 +5,7 @@
 
 return [
     'show' => [
+        'confirmation' => 'Are you sure you want to delete this screenshot?',
         'deleted' => 'Deleted',
         'download' => 'Download',
         'edit_title' => 'Edit title',

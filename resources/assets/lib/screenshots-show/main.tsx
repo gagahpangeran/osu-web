@@ -109,6 +109,7 @@ export default class Main extends React.PureComponent<Props, State> {
                   {() => (
                     <button
                       className='simple-menu__item'
+                      onClick={this.delete}
                     >
                       {osu.trans('common.buttons.delete')}
                     </button>
@@ -129,6 +130,17 @@ export default class Main extends React.PureComponent<Props, State> {
       </>
     );
   }
+
+  private delete = () => {
+    if (!confirm(osu.trans('screenshots.show.confirmation'))) return;
+
+    $.ajax(route('screenshots.destroy', { screenshot: this.props.screenshot.id }), {
+      method: 'DELETE',
+    }).done(() => {
+      // just reload for simplicity
+      osu.reloadPage();
+    }).fail(osu.ajaxError);
+  };
 
   private handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value });
