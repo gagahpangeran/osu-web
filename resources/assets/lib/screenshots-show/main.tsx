@@ -4,6 +4,7 @@
 import HeaderV4 from 'header-v4';
 import ScreenshotJson from 'interfaces/screenshot-json';
 import { route } from 'laroute';
+import { PopupMenuPersistent } from 'popup-menu-persistent';
 import * as React from 'react';
 import { StringWithComponent } from 'string-with-component';
 import TimeWithTooltip from 'time-with-tooltip';
@@ -102,6 +103,18 @@ export default class Main extends React.PureComponent<Props, State> {
                   {osu.trans('screenshots.show.download')}
                 </a>
               )}
+
+              <div className='screenshot-show__menu'>
+                <PopupMenuPersistent>
+                  {() => (
+                    <button
+                      className='simple-menu__item'
+                    >
+                      {osu.trans('common.buttons.delete')}
+                    </button>
+                  )}
+                </PopupMenuPersistent>
+              </div>
             </div>
 
             <div className='screenshot-show__content'>

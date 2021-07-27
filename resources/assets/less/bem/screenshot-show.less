@@ -31,6 +31,16 @@
     height: auto;
   }
 
+  &__menu {
+    .circle(31px);
+    background-color: hsl(var(--hsl-b1));
+    position: relative;
+
+    .link-hover({
+      background-color: hsl(var(--hsl-l1))
+    })
+  }
+
   &__title {
     .reset-input();
     font-size: @font-size--title;
