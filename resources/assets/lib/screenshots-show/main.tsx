@@ -65,66 +65,73 @@ export default class Main extends React.PureComponent<Props, State> {
                   value={this.state.title}
                 />
               </div>
-              <div className='screenshot-show__detail'>
-                <StringWithComponent
-                  mappings={{
-                    ':timeago': <TimeWithTooltip key='timeago' dateTime={this.props.screenshot.created_at} relative />,
-                    ':user': <UserLink key='user' user={this.props.screenshot.user} />,
-                  }}
-                  pattern={osu.trans('screenshots.show.uploaded_by')}
-                />
-              </div>
-            </div>
 
-            <div className='screenshot-show__toolbar'>
-              <button
-                className='btn-osu-big btn-osu-big--forum-button'
-                disabled={this.state.isBusy}
-                onClick={this.toggleEditTitle}
-              >
-                {osu.trans(this.state.isEdit ? 'common.buttons.cancel' : 'screenshots.show.edit_title')}
-              </button>
-
-              {this.state.isEdit ? (
-                <button
-                  className='btn-osu-big btn-osu-big--forum-primary'
-                  disabled={this.state.isBusy}
-                  onClick={this.save}
-                >
-                  {osu.trans('common.buttons.save')}
-                </button>
-              ) : (
-                <a
-                  className='btn-osu-big btn-osu-big--forum-primary'
-                  data-turbolinks={false}
-                  download
-                  href={this.props.screenshot.image_url ?? ''}
-                >
-                  {osu.trans('screenshots.show.download')}
-                </a>
+              {!this.props.screenshot.is_deleted && (
+                <div className='screenshot-show__detail'>
+                  <StringWithComponent
+                    mappings={{
+                      ':timeago': <TimeWithTooltip key='timeago' dateTime={this.props.screenshot.created_at} relative />,
+                      ':user': <UserLink key='user' user={this.props.screenshot.user} />,
+                    }}
+                    pattern={osu.trans('screenshots.show.uploaded_by')}
+                  />
+                </div>
               )}
+            </div>
 
-              <div className='screenshot-show__menu'>
-                <PopupMenuPersistent>
-                  {() => (
+            {!this.props.screenshot.is_deleted && (
+              <>
+                <div className='screenshot-show__toolbar'>
+                  <button
+                    className='btn-osu-big btn-osu-big--forum-button'
+                    disabled={this.state.isBusy}
+                    onClick={this.toggleEditTitle}
+                  >
+                    {osu.trans(this.state.isEdit ? 'common.buttons.cancel' : 'screenshots.show.edit_title')}
+                  </button>
+
+                  {this.state.isEdit ? (
                     <button
-                      className='simple-menu__item'
-                      onClick={this.delete}
+                      className='btn-osu-big btn-osu-big--forum-primary'
+                      disabled={this.state.isBusy}
+                      onClick={this.save}
                     >
-                      {osu.trans('common.buttons.delete')}
+                      {osu.trans('common.buttons.save')}
                     </button>
+                  ) : (
+                    <a
+                      className='btn-osu-big btn-osu-big--forum-primary'
+                      data-turbolinks={false}
+                      download
+                      href={this.props.screenshot.image_url ?? ''}
+                    >
+                      {osu.trans('screenshots.show.download')}
+                    </a>
                   )}
-                </PopupMenuPersistent>
-              </div>
-            </div>
 
-            <div className='screenshot-show__content'>
-              <img
-                alt={this.props.screenshot.title}
-                className='screenshot-show__image'
-                src={this.props.screenshot.image_url ?? ''}
-              />
-            </div>
+                  <div className='screenshot-show__menu'>
+                    <PopupMenuPersistent>
+                      {() => (
+                        <button
+                          className='simple-menu__item'
+                          onClick={this.delete}
+                        >
+                          {osu.trans('common.buttons.delete')}
+                        </button>
+                      )}
+                    </PopupMenuPersistent>
+                  </div>
+                </div>
+
+                <div className='screenshot-show__content'>
+                  <img
+                    alt={this.props.screenshot.title}
+                    className='screenshot-show__image'
+                    src={this.props.screenshot.image_url ?? ''}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </>
