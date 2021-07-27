@@ -4,7 +4,12 @@
 --}}
 
 @extends('master', [
+    'canonicalUrl' => route('screenshots.show', ['screenshot' => $screenshot['id']]),
     'titlePrepend' => $screenshot['title'],
+    'opengraph' => [
+        'title' => $screenshot['title'],
+        'image' => $screenshot['image_url'],
+    ],
 ])
 
 @section('content')
