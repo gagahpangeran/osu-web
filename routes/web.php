@@ -269,6 +269,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::group(['namespace' => 'Users'], function () {
             Route::resource('multiplayer', 'MultiplayerController', ['only' => 'index']);
 
+            Route::resource('gallery', 'GalleryController', ['only' => 'index']);
+
             Route::group(['as' => 'modding.', 'prefix' => 'modding'], function () {
                 Route::get('/', 'ModdingHistoryController@index')->name('index');
                 Route::get('/posts', 'ModdingHistoryController@posts')->name('posts');
