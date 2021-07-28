@@ -6,6 +6,7 @@
 namespace App\Models;
 
 use App\Traits\Uploadable;
+use App\Traits\WithDbCursorHelper;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
@@ -22,8 +23,15 @@ use Illuminate\Http\UploadedFile;
  */
 class UserScreenshot extends Model
 {
-    use SoftDeletes;
-    use Uploadable;
+    use SoftDeletes, Uploadable, WithDbCursorHelper;
+
+    const SORTS = [
+        'created' => [
+            ['column' => 'id', 'order' => 'DESC', 'type' => 'int'],
+        ]
+    ];
+
+    const DEFAULT_SORT = 'created';
 
     protected $table = 'osu_user_screenshots';
 
@@ -39,6 +47,33 @@ class UserScreenshot extends Model
         }
 
         return $this->title ?? osu_trans('screenshots.show.no_title');
+    }
+
+    public static function search($params)
+    {
+        $query = static::query();
+
+        $user = $params['user'];
+        $sort = $params['sort'] ?? null;
+
+        $query->uploadedBy($user);
+
+        $cursorHelper = static::makeDbCursorHelper($sort);
+        $query->cursorSort($cursorHelper, get_arr($sort));
+
+        $limit = clamp(get_int($params['limit'] ?? 10), 1, 10);
+        $query->limit($limit);
+
+        return [
+            'cursorHelper' => $cursorHelper,
+            'query' => $query,
+            'search' => ['limit' => $limit, 'sort' => $cursorHelper->getSortName()],
+        ];
+    }
+
+    public function scopeUploadedBy($query, User $user)
+    {
+        return $query->where('user_id', $user->user_id);
     }
 
     public static function upload(UploadedFile $file, User $user): UserScreenshot
