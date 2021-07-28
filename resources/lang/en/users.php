@@ -224,6 +224,9 @@ return [
                 'title_longer' => 'Recent Events',
                 'show_more' => 'see more events',
             ],
+            'gallery' => [
+                'title' => 'Screenshot Gallery',
+            ],
             'historical' => [
                 'title' => 'Historical',
 

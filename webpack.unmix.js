@@ -32,12 +32,12 @@ dotenv.config();
 
 const inProduction = env === 'production' || process.argv.includes('-p');
 const paymentSandbox = !(process.env.PAYMENT_SANDBOX === '0'
-                         || process.env.PAYMENT_SANDBOX === 'false'
-                         || !process.env.PAYMENT_SANDBOX);
+  || process.env.PAYMENT_SANDBOX === 'false'
+  || !process.env.PAYMENT_SANDBOX);
 
 const writeManifest = !(process.env.SKIP_MANIFEST === '1'
-                        || process.env.SKIP_MANIFEST === 'true'
-                        || process.env.SKIP_MANIFEST);
+  || process.env.SKIP_MANIFEST === 'true'
+  || process.env.SKIP_MANIFEST);
 // #endregion
 
 // #region helpers
@@ -149,6 +149,7 @@ const tsReactComponents = [
   'notifications-index',
   'scores-show',
   'screenshots-show',
+  'user-gallery-index',
   'user-multiplayer-index',
 ];
 

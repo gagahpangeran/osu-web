@@ -10,6 +10,7 @@ use App\Models\UserScreenshot;
 class UserScreenshotTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
+        'image_size',
         'image_url',
         'user',
     ];

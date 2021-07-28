@@ -10,7 +10,7 @@
 @section('content')
     @include('users._restricted_banner', compact('user'))
 
-    {{-- <div class="js-react--user-multiplayer-index osu-layout osu-layout--full"></div> --}}
+    <div class="js-react--user-gallery-index osu-layout osu-layout--full"></div>
 @endsection
 
 @section ("script")
@@ -23,4 +23,6 @@
     <script id="json-user" type="application/json">
         {!! json_encode($jsonUser) !!}
     </script>
+
+    @include('layout._react_js', ['src' => 'js/react/user-gallery-index.js'])
 @endsection

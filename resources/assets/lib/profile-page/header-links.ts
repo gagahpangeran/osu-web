@@ -5,9 +5,9 @@ import HeaderLink from 'interfaces/header-link';
 import UserJsonExtended from 'interfaces/user-json-extended';
 import { route } from 'laroute';
 
-type LinkMode = 'modding' | 'multiplayer' | 'show';
+type LinkMode = 'gallery' | 'modding' | 'multiplayer' | 'show';
 
-const nonBotModes: LinkMode[] = ['modding', 'multiplayer'];
+const nonBotModes: LinkMode[] = ['modding', 'multiplayer', 'gallery'];
 
 export default function headerLinks(user: UserJsonExtended, active: LinkMode) {
   const links: HeaderLink[] = [{

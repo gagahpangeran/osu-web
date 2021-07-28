@@ -46,6 +46,7 @@ return [
         ],
 
         'users' => [
+            'gallery' => 'gallery',
             'modding' => 'modding',
             'multiplayer' => 'multiplayer',
             'show' => 'info',

@@ -142,6 +142,9 @@ return [
         '_' => 'osu!store',
     ],
     'users' => [
+        'gallery_controller' => [
+            '_' => 'gallery',
+        ],
         'modding_history_controller' => [
             '_' => 'modder info',
         ],
