@@ -5,10 +5,8 @@ import Blackout from 'blackout';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
 import * as React from 'react';
-import { blackoutToggle } from 'utils/blackout';
+import { getBeatmapMapper } from 'utils/beatmap-helper';
 import { classWithModifiers, Modifiers } from 'utils/css';
-import { formatNumber } from 'utils/html';
-import { isClickable } from 'utils/html';
 import { nextVal } from 'utils/seq';
 
 interface Props {
@@ -17,7 +15,8 @@ interface Props {
   createLink: (beatmap: BeatmapJsonExtended) => string;
   currentBeatmap: BeatmapJsonExtended;
   getCount?: (beatmap: BeatmapJsonExtended) => number | undefined;
-  modifiers?: string[];
+  large: boolean;
+  modifiers?: Modifiers;
   onSelectBeatmap: (beatmapId: number) => void;
   users: Partial<Record<number | string, UserJson>>;
 }
