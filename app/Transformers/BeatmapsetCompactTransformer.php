@@ -25,6 +25,7 @@ class BeatmapsetCompactTransformer extends TransformerAbstract
     protected array $availableIncludes = [
         'availability',
         'beatmaps',
+        'beatmapset_nominations',
         'converts',
         'current_nominations',
         'current_user_attributes',
@@ -98,6 +99,14 @@ class BeatmapsetCompactTransformer extends TransformerAbstract
     public function includeBeatmaps(Beatmapset $beatmapset, Fractal\ParamBag $params)
     {
         return $this->collection($this->beatmaps($beatmapset, $params), new $this->beatmapTransformer());
+    }
+
+    public function includeBeatmapsetNominations(Beatmapset $beatmapset)
+    {
+        return $this->collection(
+            $beatmapset->beatmapsetNominations,
+            new BeatmapsetNominationTransformer(),
+        );
     }
 
     public function includeConverts(Beatmapset $beatmapset)

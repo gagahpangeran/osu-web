@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 import BeatmapJson from './beatmap-json';
+import UserJson from './user-json';
 import { RulesetId } from './ruleset';
 
 export function isValid(x: BeatmapJson | BeatmapExtendedJson): x is BeatmapExtendedJson {
@@ -28,4 +29,5 @@ export default interface BeatmapExtendedJson extends BeatmapJson {
   playcount: number;
   ranked: number;
   url: string;
+  user?: UserJson;
 }

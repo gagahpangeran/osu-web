@@ -8,8 +8,6 @@ namespace App\Transformers;
 use App\Models\Beatmap;
 use App\Models\BeatmapFailtimes;
 use App\Models\DeletedUser;
-use App\Models\User;
-use League\Fractal\Resource\ResourceInterface;
 
 class BeatmapCompactTransformer extends TransformerAbstract
 {
@@ -20,8 +18,6 @@ class BeatmapCompactTransformer extends TransformerAbstract
         'current_user_tag_ids',
         'failtimes',
         'max_combo',
-        'owners',
-        'top_tag_ids',
         'user',
     ];
 
@@ -89,23 +85,10 @@ class BeatmapCompactTransformer extends TransformerAbstract
         return $this->primitive($beatmap->maxCombo());
     }
 
-    public function includeOwners(Beatmap $beatmap)
-    {
-        return $this->collection($beatmap->getOwners(), fn (User $user) => [
-            'id' => $user->getKey(),
-            'username' => $user->username,
-        ]);
-    }
-
-    public function includeTopTagIds(Beatmap $beatmap)
-    {
-        return $this->primitive($beatmap->topTagIds());
-    }
-
     public function includeUser(Beatmap $beatmap)
     {
         return $this->item(
-            $beatmap->user ?? new DeletedUser(),
+            $beatmap->user ?? (new DeletedUser()),
             new UserCompactTransformer(),
         );
     }
