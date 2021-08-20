@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { StringWithComponent } from 'string-with-component';
 import { UserLink } from 'user-link';
-import { getBeatmapMapper } from 'utils/beatmap-helper';
+import CountBadge from './count-badge';
 import Extra from './extra';
 import Metadata from './metadata';
 import Stats from './stats';
@@ -35,7 +35,6 @@ function formatDuration(value: number) {
 export default class Header extends React.PureComponent<Props> {
   render() {
     const showedBeatmap = this.props.hoveredBeatmap ?? this.props.currentBeatmap;
-    const mapper = getBeatmapMapper(this.props.beatmapset, showedBeatmap);
 
     return (
       <div className='beatmapset-info'>
@@ -51,17 +50,23 @@ export default class Header extends React.PureComponent<Props> {
 
             <DifficultyBadge modifiers='beatmapset-info' rating={showedBeatmap.difficulty_rating} />
 
-            <div className='beatmapset-info__diff-mapper'>
-              <StringWithComponent
-                mappings={{
-                  ':mapper':
-                    <UserLink
-                      key='mapper'
-                      user={{ id: mapper.id, username: mapper.username }}
-                    />,
-                }}
-                pattern={osu.trans('beatmapsets.show.details.mapped_by')}
-              />
+            <div className='u-ellipsis-overflow'>
+              <span className='beatmapset-info__diff-name'>
+                {showedBeatmap.version}
+              </span>
+              {' '}
+              <span className='beatmapset-info__diff-mapper'>
+                <StringWithComponent
+                  mappings={{
+                    ':mapper':
+                      <UserLink
+                        key='mapper'
+                        user={{ id: showedBeatmap.user?.id, username: showedBeatmap.user?.username ?? '' }}
+                      />,
+                  }}
+                  pattern={osu.trans('beatmapsets.show.details.mapped_by')}
+                />
+              </span>
             </div>
           </div>
 
