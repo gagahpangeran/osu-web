@@ -67,6 +67,7 @@ type AjaxError = (xhr: JQuery.jqXHR) => void;
 
 interface OsuCommon {
   ajaxError: AjaxError;
+  currentUserIsFriendsWith: (userId: number) => boolean;
   formatBytes: (bytes: number, decimals?: number) => string;
   formatNumber(num: null, precision?: number, options?: Intl.NumberFormatOptions, locale?: string): null;
   formatNumber(num: number, precision?: number, options?: Intl.NumberFormatOptions, locale?: string): string;
