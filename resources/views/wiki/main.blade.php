@@ -24,8 +24,6 @@
 
         <div class="js-react--wiki-search"></div>
 
-        <div class="wiki-main-page">
-            {!! $page->get()["output"] !!}
-        </div>
+        {!! $page->get()["output"] !!}
     </div>
 @endsection
