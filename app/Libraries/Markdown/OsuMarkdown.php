@@ -119,6 +119,15 @@ class OsuMarkdown
                 'parse_attribute_id' => true,
             ],
         ],
+        'wiki-main' => [
+            'commonmark' => [
+                'html_input' => 'allow',
+            ],
+            'osu_extension' => [
+                'block_name' => 'wiki-main-page',
+                'fix_wiki_url' => true,
+            ],
+        ],
     ];
 
     private array $commonmarkConfig;
