@@ -99,6 +99,10 @@
             @include("layout.footer")
         @endif
 
+        <div class="not-official-footer">
+            <strong>This is a development instance of the <a href="https://osu.ppy.sh" class="not-official-footer__link">osu! website</a>. Please do not login with your osu! credentials.</strong>
+        </div>
+
         <div
             class="fixed-bar
                 js-fixed-element
