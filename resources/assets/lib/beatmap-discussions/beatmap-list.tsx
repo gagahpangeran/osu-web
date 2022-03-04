@@ -4,6 +4,7 @@
 import Blackout from 'blackout';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
+import UserJson from 'interfaces/user-json';
 import { deletedUser } from 'models/user';
 import * as React from 'react';
 import { classWithModifiers, Modifiers } from 'utils/css';
@@ -28,6 +29,7 @@ interface State {
 export default class BeatmapList extends React.PureComponent<Props, State> {
   static defaultProps = {
     large: true,
+    users: {},
   };
 
   private readonly eventId = `beatmapset-discussions-show-beatmap-list-${nextVal()}`;
@@ -70,7 +72,7 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
               <BeatmapListItem
                 beatmap={this.props.currentBeatmap}
                 large={this.props.large}
-                mapper={this.props.currentBeatmap.user ?? deletedUser.toJson()}
+                mapper={this.props.currentBeatmap.user ?? this.props.users[this.props.currentBeatmap.user_id] ?? deletedUser.toJson()}
                 withButton='fas fa-chevron-down'
               />
             </div>
@@ -95,7 +97,7 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
       <BeatmapListItem
         beatmap={beatmap}
         count={this.props.getCount?.(beatmap)}
-        mapper={beatmap.user ?? deletedUser.toJson()}
+        mapper={beatmap.user ?? this.props.users[beatmap.user_id] ?? deletedUser.toJson()}
       />
     </a>
   );
