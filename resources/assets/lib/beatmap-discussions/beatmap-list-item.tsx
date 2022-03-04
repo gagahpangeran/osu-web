@@ -52,11 +52,7 @@ export default class BeatmapListItem extends React.PureComponent<Props> {
             <span className='beatmap-list-item__mapper'>
               <StringWithComponent
                 mappings={{
-                  ':mapper':
-                    <UserLink
-                      key='mapper'
-                      user={{ id: this.props.mapper.id, username: this.props.mapper.username }}
-                    />,
+                  mapper: <UserLink user={this.props.mapper} />,
                 }}
                 pattern={osu.trans('beatmapsets.show.details.mapped_by')}
               />
