@@ -90,7 +90,8 @@ export default class Header extends React.PureComponent<Props> {
               beatmapset={this.props.beatmapset}
               createLink={this.createLink}
               currentBeatmap={this.props.currentBeatmap}
-              modifiers={['beatmapset-show']}
+              large={false}
+              modifiers='beatmapset-show'
               onSelectBeatmap={this.onSelectBeatmap}
             />
           </div>
