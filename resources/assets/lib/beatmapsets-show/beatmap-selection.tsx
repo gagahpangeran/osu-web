@@ -4,7 +4,6 @@
 import { BeatmapIcon } from 'beatmap-icon';
 import BeatmapJsonExtended from 'interfaces/beatmap-json-extended';
 import * as React from 'react';
-import { getDiffColour } from 'utils/beatmap-helper';
 import { generate as generateHash } from 'utils/beatmapset-page-hash';
 import { classWithModifiers } from 'utils/css';
 
@@ -15,7 +14,7 @@ interface Props {
 
 export default class BeatmapSelection extends React.PureComponent<Props> {
   render() {
-    const className = classWithModifiers('beatmapset-beatmap-picker__beatmap', { active: this.props.active });
+    const className = classWithModifiers('beatmapset-beatmap-selection', { active: this.active });
 
     return (
       <a
@@ -24,9 +23,6 @@ export default class BeatmapSelection extends React.PureComponent<Props> {
         onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        style={{
-          '--stripe-colour': `${getDiffColour(this.props.beatmap.difficulty_rating)}`,
-        } as React.CSSProperties}
       >
         <BeatmapIcon beatmap={this.props.beatmap} modifier='beatmapset' />
       </a>
