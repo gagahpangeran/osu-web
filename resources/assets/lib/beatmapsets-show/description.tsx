@@ -35,36 +35,35 @@ interface State {
     const description = this.state.description ?? this.props.beatmapset.description;
 
     return (
-      <div className='beatmapset-description u-fancy-scrollbar'>
-        {this.state.isEditing && canEdit ? (
+      <div className='page-extra page-extra--userpage'>
+        {!this.isEditing && canEdit && (
+          <div className='page-extra__actions'>
+            <button
+              className='btn-circle btn-circle--page-toggle'
+              onClick={this.onStartEditClick}
+              type='button'
+            >
+              <span className='fas fa-pencil-alt' />
+            </button>
+          </div>
+        )}
+
+        {this.isEditing && canEdit ? (
           <BbcodeEditor
-            disabled={this.state.isBusy}
-            modifiers='beatmapset-description-editor'
+            disabled={this.xhr != null}
+            modifiers='profile-page'
             onChange={this.onEditorChange}
             rawValue={description.bbcode ?? ''}
           />
         ) : (
-          <div className='beatmapset-description__container'>
+          <div className='page-extra__content-overflow-wrapper-outer u-fancy-scrollbar'>
             <div
-              className='beatmapset-description__content'
+              className='page-extra__content-overflow-wrapper-inner'
               dangerouslySetInnerHTML={{ __html: description.description ?? '' }}
             />
           </div>
         )}
 
-        {!this.state.isEditing && canEdit && (
-          <div className='beatmapset-description__edit-button'>
-            <button
-              className='btn-circle'
-              onClick={this.toggleEditing}
-              type='button'
-            >
-              <span className='btn-circle__content'>
-                <i className='fas fa-pencil-alt' />
-              </span>
-            </button>
-          </div>
-        )}
       </div>
     );
   }
