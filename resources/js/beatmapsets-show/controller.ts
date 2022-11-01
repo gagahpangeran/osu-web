@@ -80,14 +80,17 @@ export default class Controller {
   }
 
   @computed
-  get relatedTags() {
-    const map = new Map<number, TagJson>();
+  get nominators() {
+    return this
+      .beatmapset
+      .beatmapset_nominations
+      .filter((n) => n.reset)
+      .map((n) => this.usersById[n.user_id] ?? deletedUser);
+  }
 
-    for (const tag of this.beatmapset.related_tags) {
-      map.set(tag.id, tag);
-    }
-
-    return map;
+  @computed
+  get usersById() {
+    return keyBy(this.beatmapset.related_users, 'id');
   }
 
   @computed

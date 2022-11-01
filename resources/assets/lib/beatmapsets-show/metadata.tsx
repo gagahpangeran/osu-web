@@ -3,8 +3,8 @@
 
 import BeatmapsetExtendedJson from 'interfaces/beatmapset-extended-json';
 import { route } from 'laroute';
-import { Modal } from 'modal';
-import { deletedUser } from 'models/user';
+import { action, makeObservable, observable } from 'mobx';
+import { observer } from 'mobx-react';
 import * as moment from 'moment';
 import * as React from 'react';
 import TimeWithTooltip from 'time-with-tooltip';
@@ -15,11 +15,14 @@ interface Props {
   beatmapset: BeatmapsetExtendedJson;
 }
 
-interface State {
-  isEditing: boolean;
-}
+@observer
+export default class Metadata extends React.PureComponent<Props> {
+  @observable private isEditing = false;
 
-export default class Metadata extends React.PureComponent<Props, State> {
+  private get beatmapset() {
+    return this.props.controller.beatmapset;
+  }
+
   constructor(props: Props) {
     super(props);
 
@@ -29,9 +32,9 @@ export default class Metadata extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const tags = this.props.beatmapset.tags.split(' ');
-    const canEdit = this.props.beatmapset.current_user_attributes?.can_edit_metadata ?? false;
-    const nominators = this.props.beatmapset.beatmapset_nominations?.filter((n) => n.reset === 0).map((n) => n.user ?? deletedUser.toJson());
+    const tags = this.beatmapset.tags.split(' ');
+    const canEdit = this.beatmapset.current_user_attributes?.can_edit_metadata ?? false;
+    const nominators = this.props.controller.nominators;
 
     return (
       <div className='beatmapset-metadata u-fancy-scrollbar'>
