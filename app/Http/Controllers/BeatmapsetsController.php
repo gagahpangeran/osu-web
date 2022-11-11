@@ -441,7 +441,6 @@ class BeatmapsetsController extends Controller
             'beatmaps.current_user_playcount',
             'beatmaps.current_user_tag_ids',
             'beatmaps.max_combo',
-            'beatmapset_nominations',
             'converts',
             'converts.failtimes',
             'current_user_attributes',

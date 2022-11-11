@@ -7,7 +7,6 @@ namespace App\Transformers;
 
 use App\Models\Beatmap;
 use App\Models\BeatmapFailtimes;
-use App\Models\DeletedUser;
 
 class BeatmapCompactTransformer extends TransformerAbstract
 {
@@ -18,7 +17,6 @@ class BeatmapCompactTransformer extends TransformerAbstract
         'current_user_tag_ids',
         'failtimes',
         'max_combo',
-        'user',
     ];
 
     protected $beatmapsetTransformer = BeatmapsetCompactTransformer::class;
@@ -83,13 +81,5 @@ class BeatmapCompactTransformer extends TransformerAbstract
     public function includeMaxCombo(Beatmap $beatmap)
     {
         return $this->primitive($beatmap->maxCombo());
-    }
-
-    public function includeUser(Beatmap $beatmap)
-    {
-        return $this->item(
-            $beatmap->user ?? (new DeletedUser()),
-            new UserCompactTransformer(),
-        );
     }
 }
