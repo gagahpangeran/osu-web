@@ -102,12 +102,34 @@ export default class BeatmapList extends React.PureComponent<Props, State> {
     </a>
   );
 
-  private getModifiers = () => {
-    if (this.props.modifiers === undefined) {
-      return {};
-    }
-
-    return Object.fromEntries(this.props.modifiers.map((modifier) => ([modifier, true])));
+    return (
+      <div
+        key={beatmap.id}
+        className={classWithModifiers('beatmap-list__item', { current: beatmap.id === this.props.currentBeatmap.id })}
+        data-id={beatmap.id}
+        onClick={this.selectBeatmap}
+      >
+        <BeatmapListItem beatmap={beatmap} />
+        {this.props.beatmapset.user_id !== beatmap.user_id && (
+          <>
+            {' '}
+            <span className='beatmap-list__item-mapper'>
+              <StringWithComponent
+                mappings={{
+                  mapper: <UserLink user={this.props.users[beatmap.user_id] ?? deletedUser.toJson()} />,
+                }}
+                pattern={osu.trans('beatmapsets.show.details.mapped_by')}
+              />
+            </span>
+          </>
+        )}
+        {count != null &&
+          <div className='beatmap-list__item-count'>
+            {formatNumber(count)}
+          </div>
+        }
+      </div>
+    );
   };
 
   private hideSelector = () => {
