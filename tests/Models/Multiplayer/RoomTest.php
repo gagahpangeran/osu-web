@@ -175,6 +175,48 @@ class RoomTest extends TestCase
         (new Room())->startGame($user, $params);
     }
 
+    public function testStartPlaylistsGameWithItemCountUnderCap()
+    {
+        $beatmap = Beatmap::factory()->create();
+        $user = User::factory()->create();
+
+        $limit = $GLOBALS['cfg']['osu']['user']['max_items_in_playlist'];
+        $params = [
+            'duration' => 60,
+            'name' => 'test',
+            'type' => Room::PLAYLIST_TYPE,
+            'playlist' => array_fill(0, $limit, [
+                'beatmap_id' => $beatmap->getKey(),
+                'ruleset_id' => $beatmap->playmode,
+            ]),
+        ];
+
+        $this->expectCountChange(fn () => PlaylistItem::all()->count(), $limit);
+        (new Room())->startGame($user, $params);
+    }
+
+    public function testStartPlaylistsGameWithItemCountOverCap()
+    {
+        $beatmap = Beatmap::factory()->create();
+        $user = User::factory()->create();
+
+        $limit = $GLOBALS['cfg']['osu']['user']['max_items_in_playlist'];
+        $params = [
+            'duration' => 60,
+            'name' => 'test',
+            'type' => Room::PLAYLIST_TYPE,
+            'playlist' => array_fill(0, $limit + 1, [
+                'beatmap_id' => $beatmap->getKey(),
+                'ruleset_id' => $beatmap->playmode,
+            ]),
+        ];
+
+        $this->expectCountChange(fn () => PlaylistItem::all()->count(), 0);
+        $this->expectException(InvariantException::class);
+        $this->expectExceptionMessage(osu_trans('multiplayer.room.errors.too_many_playlist_items'));
+        (new Room())->startGame($user, $params);
+    }
+
     public function testRoomHasEnded()
     {
         $user = User::factory()->create();
