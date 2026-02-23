@@ -115,6 +115,66 @@ class RoomTest extends TestCase
         (new Room())->startGame($user, $params);
     }
 
+    public function testStartRealtimeGameWithNoPlaylistItems()
+    {
+        $user = User::factory()->create();
+
+        $params = [
+            'duration' => 60,
+            'name' => 'test',
+            'type' => Room::REALTIME_DEFAULT_TYPE,
+            'playlist' => [],
+        ];
+
+        $this->expectException(InvariantException::class);
+        $this->expectExceptionMessage('realtime room must have exactly one playlist item');
+        (new Room())->startGame($user, $params);
+    }
+
+    public function testStartRealtimeGameWithMultiplePlaylistItems()
+    {
+        $beatmap = Beatmap::factory()->create([
+            'playmode' => 2,
+        ]);
+        $user = User::factory()->create();
+
+        $params = [
+            'duration' => 60,
+            'name' => 'test',
+            'type' => Room::REALTIME_DEFAULT_TYPE,
+            'playlist' => [
+                [
+                    'beatmap_id' => $beatmap->getKey(),
+                    'ruleset_id' => $beatmap->playmode,
+                ],
+                [
+                    'beatmap_id' => $beatmap->getKey(),
+                    'ruleset_id' => $beatmap->playmode,
+                ],
+            ],
+        ];
+
+        $this->expectException(InvariantException::class);
+        $this->expectExceptionMessage('realtime room must have exactly one playlist item');
+        (new Room())->startGame($user, $params);
+    }
+
+    public function testStartPlaylistsGameWithNoPlaylistItems()
+    {
+        $user = User::factory()->create();
+
+        $params = [
+            'duration' => 60,
+            'name' => 'test',
+            'type' => Room::PLAYLIST_TYPE,
+            'playlist' => [],
+        ];
+
+        $this->expectException(InvariantException::class);
+        $this->expectExceptionMessage('room must have at least one playlist item');
+        (new Room())->startGame($user, $params);
+    }
+
     public function testRoomHasEnded()
     {
         $user = User::factory()->create();
