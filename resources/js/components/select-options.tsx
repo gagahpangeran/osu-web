@@ -68,19 +68,13 @@ export default class SelectOptions<T extends Option> extends React.Component<Pro
       this.props.modifiers,
     );
 
-    const text = this.props.selected?.text;
-
     return (
       <div ref={this.ref} className={className}>
         <div className={`${bn}__select`}>
           {this.renderOption({
             children: (
               <>
-                {typeof text === 'string' ? (
-                  <div className='u-ellipsis-overflow'>
-                    {text}
-                  </div>
-                ) : text}
+                {this.renderText(this.props.selected.text)}
 
                 <div className={`${bn}__decoration`}>
                   <span className='fas fa-chevron-down' />
@@ -137,17 +131,21 @@ export default class SelectOptions<T extends Option> extends React.Component<Pro
 
   private renderOptions() {
     return this.props.options.map((option) => this.renderOption({
-      children: (
-        <div className='u-ellipsis-overflow'>
-          {option.text}
-        </div>
-      ),
+      children: this.renderText(option.text),
       onClick: (event: React.MouseEvent) => {
         this.optionSelected(event, option);
       },
       option,
       selected: this.props.selected?.id === option.id,
     }));
+  }
+
+  private renderText(text: T['text']) {
+    return typeof text === 'string' ? (
+      <div className='u-ellipsis-overflow'>
+        {text}
+      </div>
+    ) : text;
   }
 
   @action
