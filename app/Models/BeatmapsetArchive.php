@@ -6,6 +6,7 @@
 namespace App\Models;
 
 use App\Exceptions\BeatmapProcessorException;
+use App\Libraries\BeatmapFile;
 
 class BeatmapsetArchive
 {
