@@ -188,8 +188,12 @@ class TeamsController extends Controller
                 ],
             ));
         } else {
-            $statistics = $team->statistics()->firstOrNew(['ruleset_id' => $rulesetId]);
-            return ext_view('teams.show', compact('rulesetId', 'statistics', 'team'));
+            return ext_view('teams.show', [
+                'extraStatistics' => $team->extraStatistics($rulesetId),
+                'rulesetId' => $rulesetId,
+                'statistics' => $team->statistics()->firstOrNew(['ruleset_id' => $rulesetId]),
+                'team' => $team,
+            ]);
         }
     }
 

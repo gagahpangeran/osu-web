@@ -47,6 +47,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection $scoreLinks ScoreLink
  * @property-read Season $season
  * @property \Carbon\Carbon $starts_at
+ * @property bool $tournament_mode
  * @property \Carbon\Carbon|null $updated_at
  * @property int $user_id
  * @property string $type
@@ -99,6 +100,7 @@ class Room extends Model
         'password' => PresentString::class,
         'pinned' => 'boolean',
         'starts_at' => 'datetime',
+        'tournament_mode' => 'boolean',
     ];
     protected array $macros = [
         'dailyChallengeFor',
@@ -706,6 +708,8 @@ class Room extends Model
             throw new InvariantException('realtime room must have exactly one playlist item');
         } elseif (!$this->isRealtime() && $playlistItemsCount < 1) {
             throw new InvariantException('room must have at least one playlist item');
+        } elseif (!$this->isRealtime() && $playlistItemsCount > $GLOBALS['cfg']['osu']['user']['max_items_in_playlist']) {
+            throw new InvariantException(osu_trans('multiplayer.room.errors.too_many_playlist_items'));
         }
 
         if (mb_strlen($this->name) > 100) {
@@ -807,10 +811,10 @@ class Room extends Model
             throw new InvariantException('matchmaking rooms cannot be created');
         } else if ($this->isRealtime()) {
             $query->whereIn('type', static::REALTIME_TYPES);
-            $max = 1;
+            $max = $this->tournament_mode ? $this->host->maxTournamentRooms() : 1;
         } else {
             $query->where('type', static::PLAYLIST_TYPE);
-            $max = $this->host->maxMultiplayerRooms();
+            $max = $this->host->maxPlaylists();
         }
 
         if ($query->count() >= $max) {

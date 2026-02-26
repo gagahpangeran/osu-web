@@ -118,6 +118,7 @@ return [
         'token_keys' => $clientTokenKeys,
         'token_lifetime' => (get_float(env('CLIENT_TOKEN_LIFETIME_HOUR')) ?? 0.25) * 3600,
         'token_queue' => env('CLIENT_TOKEN_QUEUE') ?? 'token-queue',
+        'token_validation_timeout' => env('CLIENT_TOKEN_VALIDATION_TIMEOUT') ?? 0.05,
         'user_agent' => env('CLIENT_USER_AGENT', 'osu!'),
     ],
     'elasticsearch' => [
@@ -218,6 +219,7 @@ return [
     ],
     'team' => [
         'create_require_supporter' => get_bool(env('TEAM_CREATE_REQUIRE_SUPPORTER')) ?? false,
+        'extra_statistics_cache_duration' => get_int(env('TEAM_EXTRA_STATISTICS_CACHE_DURATION')) ?? 600,
         'max_members' => get_int(env('TEAM_MAX_MEMBERS')) ?? 40,
     ],
     'totp' => [
@@ -275,8 +277,11 @@ return [
         'max_multiplayer_duration' => get_int(env('USER_MAX_MULTIPLAYER_DURATION')) ?? 14,
         // see https://github.com/ppy/osu/pull/16024/files#diff-d5f8d0eb0eac5cfd6d2f486d34c4168e036b83b622c7a3c5bfce5205d67bf52bR327-R330
         'max_multiplayer_duration_supporter' => get_int(env('USER_MAX_MULTIPLAYER_DURATION_SUPPORTER')) ?? 63,
-        'max_multiplayer_rooms' => get_int(env('USER_MAX_MULTIPLAYER_ROOMS')) ?? 1,
-        'max_multiplayer_rooms_supporter' => get_int(env('USER_MAX_MULTIPLAYER_ROOMS_SUPPORTER')) ?? 5,
+        'max_playlists' => get_int(env('USER_MAX_PLAYLISTS')) ?? 1,
+        'max_playlists_supporter' => get_int(env('USER_MAX_PLAYLISTS_SUPPORTER')) ?? 5,
+        'max_items_in_playlist' => get_int(env('USER_MAX_ITEMS_IN_PLAYLIST')) ?? 256,
+        'max_tournament_rooms' => get_int(env('USER_MAX_TOURNAMENT_ROOMS')) ?? 4,
+        'max_tournament_rooms_bot' => get_int(env('USER_MAX_TOURNAMENT_ROOMS_BOT')) ?? 50,
         'max_score_pins' => get_int(env('USER_MAX_SCORE_PINS')) ?? 10,
         'max_score_pins_supporter' => get_int(env('USER_MAX_SCORE_PINS_SUPPORTER')) ?? 50,
         'online_window' => intval(env('USER_ONLINE_WINDOW', 10)) * 60,
