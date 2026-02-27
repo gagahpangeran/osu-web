@@ -24,7 +24,7 @@
         $userTransformerIncludes,
     );
     $leader = json_item(
-        $leader ?? $team->members()->make(['user_id' => $team->leader_id])->userOrDeleted(),
+        $leader ?? new DeletedUser(['user_id' => $team->leader_id]),
         $userTransformer,
         $userTransformerIncludes,
     );
