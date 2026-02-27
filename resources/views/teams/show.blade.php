@@ -17,15 +17,16 @@
         }
     }
     $userTransformer = new UserCompactTransformer();
+    $userTransformerIncludes = array_diff(UserCompactTransformer::CARD_INCLUDES, ['team']);
     $members = json_collection(
         $members,
         $userTransformer,
-        UserCompactTransformer::CARD_INCLUDES,
+        $userTransformerIncludes,
     );
     $leader = json_item(
         $leader ?? $team->members()->make(['user_id' => $team->leader_id])->userOrDeleted(),
         $userTransformer,
-        UserCompactTransformer::CARD_INCLUDES,
+        $userTransformerIncludes,
     );
     $headerUrl = $team->header()->url();
 
