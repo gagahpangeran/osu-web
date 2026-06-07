@@ -79,12 +79,15 @@ return [
 
         'details' => [
             'by_artist' => 'by :artist',
-            'favourite' => 'favourite this beatmap',
-            'favourite_login' => 'sign in to favourite this beatmap',
-            'logged-out' => 'you need to sign in before downloading any beatmaps!',
+            'circle_count' => 'Circle Count :count',
+            'created_by' => 'created by :creator',
+            'favourite' => 'Favourite this beatmap',
+            'favourite_login' => 'Sign in to favourite this beatmap',
+            'length' => 'Length :value',
+            'logged-out' => 'You need to sign in before downloading any beatmaps!',
             'mapped_by' => 'mapped by :mapper',
-            'mapped_by_guest' => 'guest difficulty by :mapper',
-            'unfavourite' => 'unfavourite this beatmap',
+            'slider_count' => 'Slider Count :count',
+            'unfavourite' => 'Unfavourite this beatmap',
             'updated_timeago' => 'last updated :timeago',
 
             'download' => [
@@ -97,6 +100,12 @@ return [
             'login_required' => [
                 'bottom' => 'to access more features',
                 'top' => 'Sign In',
+            ],
+
+            'count' => [
+                'total_play' => 'Total Play Count',
+                'diff_play' => 'Difficulty Play Count',
+                'favourite' => 'Favourite Count',
             ],
         ],
 
@@ -138,9 +147,12 @@ return [
         ],
 
         'info' => [
+            'approved' => 'Approved',
+            'creator' => 'Creator',
             'description' => 'Description',
             'genre' => 'Genre',
             'language' => 'Language',
+            'loved' => 'Loved',
             'mapper_tags' => 'Mapper Tags',
             'no_scores' => 'Data still being calculated...',
             'nominators' => 'Nominators',
@@ -148,10 +160,15 @@ return [
             'offset' => 'Online offset',
             'pack_tags' => 'Beatmap Packs',
             'points-of-failure' => 'Points of Failure',
+            'qualified' => 'Qualified',
+            'ranked' => 'Ranked',
             'source' => 'Source',
             'storyboard' => 'This beatmap contains storyboard',
+            'submitted' => 'Submitted',
             'success-rate' => 'Success Rate',
             'success_rate_plays' => ':passes of :count_delimited play|:passes of :count_delimited plays',
+            'tags' => 'Tags',
+            'updated' => 'Last updated',
             'user_tags' => 'User Tags',
             'video' => 'This beatmap contains video',
         ],
@@ -217,6 +234,7 @@ return [
             'accuracy' => 'Accuracy',
             'ar' => 'Approach Rate',
             'stars' => 'Star Rating',
+            'difficulty_rating' => 'Star Difficulty',
             'total_length' => 'Length (Drain length: :hit_length)',
             'bpm' => 'BPM',
             'count_circles' => 'Circle Count',
