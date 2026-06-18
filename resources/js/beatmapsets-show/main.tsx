@@ -23,6 +23,7 @@ import Hype from './hype';
 import Info from './info';
 import NsfwWarning from './nsfw-warning';
 import ScoreboardMain from './scoreboard/main';
+import Toolbar from './toolbar';
 
 interface Props {
   container: HTMLElement;
@@ -173,6 +174,7 @@ export default class Main extends React.Component<Props> {
           <Cover controller={this.controller} />
           <Header controller={this.controller} />
           <Info controller={this.controller} />
+          <Toolbar controller={this.controller} />
 
           <div className='user-profile-pages user-profile-pages--no-tabs'>
             <Description controller={this.controller} />

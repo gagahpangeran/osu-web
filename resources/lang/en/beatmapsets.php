@@ -87,6 +87,12 @@ return [
             'unfavourite' => 'unfavourite this beatmap',
             'updated_timeago' => 'last updated :timeago',
 
+            'count' => [
+                'total_play' => 'Total Play Count',
+                'diff_play' => 'Difficulty Play Count',
+                'favourite' => 'Favourite Count',
+            ],
+
             'download' => [
                 '_' => 'Download',
                 'direct' => 'osu!direct',
