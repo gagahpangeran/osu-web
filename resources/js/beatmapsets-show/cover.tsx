@@ -1,0 +1,98 @@
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
+// See the LICENCE file in the repository root for full licence text.
+
+import BeatmapsetBadge from 'components/beatmapset-badge';
+import BeatmapsetCover from 'components/beatmapset-cover';
+import { observer } from 'mobx-react';
+import core from 'osu-core-singleton';
+import * as React from 'react';
+import { classWithModifiers } from 'utils/css';
+import { trans } from 'utils/lang';
+import BeatmapStatus from './beatmap-status';
+import Controller from './controller';
+
+interface Props {
+  controller: Controller;
+}
+
+@observer
+export default class Cover extends React.Component<Props> {
+  private get controller() {
+    return this.props.controller;
+  }
+
+  render() {
+    const expanded = core.userPreferences.get('beatmapset_cover_expanded');
+
+    return (
+      <div className={classWithModifiers('beatmapset-page-cover', { expanded })}>
+        <BeatmapsetCover
+          beatmapset={this.controller.beatmapset}
+          forceShowNsfw // check already covered by parent component
+          modifiers={['full', 'rect']}
+          size='cover'
+        />
+
+        <div className='beatmapset-page-cover__content'>
+          <div className='beatmapset-page-cover__content-item beatmapset-page-cover__content-item--left'>
+            <BeatmapStatus beatmap={this.controller.currentBeatmap} />
+
+            <BeatmapsetBadge
+              beatmapset={this.controller.beatmapset}
+              modifiers='cover'
+              type='nsfw'
+            />
+
+            <BeatmapsetBadge
+              beatmapset={this.controller.beatmapset}
+              modifiers='cover'
+              type='spotlight'
+            />
+          </div>
+
+          <div className='beatmapset-page-cover__content-item beatmapset-page-cover__content-item--right'>
+            {this.controller.beatmapset.video && (
+              <div
+                className='beatmapset-status beatmapset-status--show-icon'
+                title={trans('beatmapsets.show.info.video')}
+              >
+                <i className='fas fa-film' />
+              </div>
+            )}
+
+            {this.controller.beatmapset.storyboard && (
+              <div
+                className='beatmapset-status beatmapset-status--show-icon'
+                title={trans('beatmapsets.show.info.storyboard')}
+              >
+                <i className='fas fa-image' />
+              </div>
+            )}
+
+            <button
+              className='beatmapset-page-cover__preview js-audio--play js-audio--player'
+              data-audio-url={this.controller.beatmapset.preview_url}
+              type='button'
+            >
+              <span className='play-button' />
+            </button>
+          </div>
+
+          <div className='beatmapset-page-cover__toggle'>
+            <button
+              className='beatmapset-page-cover__preview beatmapset-page-cover__preview--circle'
+              onClick={this.toggleExpand}
+              title={trans(`common.buttons.${expanded ? 'collapse' : 'expand'}`)}
+            >
+              <span className={`fas fa-chevron-${expanded ? 'up' : 'down'}`} />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  private readonly toggleExpand = () => {
+    void core.userPreferences.set('beatmapset_cover_expanded', !core.userPreferences.get('beatmapset_cover_expanded'));
+  };
+}

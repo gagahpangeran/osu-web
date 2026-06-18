@@ -15,6 +15,7 @@ import { generate, setHash } from 'utils/beatmapset-page-hash';
 import { trans } from 'utils/lang';
 import { reloadPage } from 'utils/turbolinks';
 import Controller from './controller';
+import Cover from './cover';
 import Header from './header';
 import headerLinks from './header-links';
 import Hype from './hype';
@@ -168,6 +169,7 @@ export default class Main extends React.Component<Props> {
     return (
       <>
         <div className='osu-page osu-page--generic-compact'>
+          <Cover controller={this.controller} />
           <Header controller={this.controller} />
           <Info controller={this.controller} />
 

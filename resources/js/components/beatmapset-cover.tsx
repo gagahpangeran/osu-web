@@ -4,7 +4,7 @@
 import BeatmapsetJson from 'interfaces/beatmapset-json';
 import * as React from 'react';
 import { showVisual } from 'utils/beatmapset-helper';
-import { classWithModifiers, Modifiers, varBgDefault } from 'utils/css';
+import { classWithModifiers, ModifiersExtended, varBgDefault } from 'utils/css';
 import { cssVar2x } from 'utils/html';
 import { trans } from 'utils/lang';
 
@@ -20,7 +20,7 @@ interface PropsWithSize {
 interface BaseProps {
   beatmapset?: BeatmapsetJson | null;
   forceShowNsfw?: boolean;
-  modifiers?: Modifiers;
+  modifiers?: ModifiersExtended;
 }
 
 type Props = BaseProps & (PropsWithIsDeleted | PropsWithSize);
