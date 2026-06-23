@@ -170,8 +170,11 @@ export default class Main extends React.Component<Props> {
         <div className='osu-page osu-page--generic-compact'>
           <Header controller={this.controller} />
           <Info controller={this.controller} />
+          <Toolbar controller={this.controller} />
 
           <div className='user-profile-pages user-profile-pages--no-tabs'>
+            <Description controller={this.controller} />
+
             {this.controller.beatmapset.can_be_hyped &&
               <div className='page-extra page-extra--compact'>
                 <Hype beatmapset={this.controller.beatmapset} />
