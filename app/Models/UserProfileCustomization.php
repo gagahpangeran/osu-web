@@ -22,6 +22,7 @@ class UserProfileCustomization extends Model
         'audio_muted' => false,
         'audio_volume' => 0.45,
         'beatmapset_card_size' => self::BEATMAPSET_CARD_SIZES[0],
+        'beatmapset_cover_expanded' => true,
         'beatmapset_download' => self::BEATMAPSET_DOWNLOAD[0],
         'beatmapset_show_anime_cover' => true,
         'beatmapset_show_nsfw' => false,
@@ -144,6 +145,16 @@ class UserProfileCustomization extends Model
         }
 
         $this->setOption('beatmapset_card_size', $value);
+    }
+
+    public function getBeatmapsetCoverExpandedAttribute()
+    {
+        return $this->options['beatmapset_cover_expanded'] ?? static::DEFAULTS['beatmapset_cover_expanded'];
+    }
+
+    public function setBeatmapsetCoverExpandedAttribute($value)
+    {
+        $this->setOption('beatmapset_cover_expanded', get_bool($value));
     }
 
     public function getBeatmapsetDownloadAttribute()
